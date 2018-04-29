@@ -1,0 +1,6 @@
+- Comment tracer le graph d'une map ?
+- C'est quoi les vertices?
+- C'est quoi les edges?
+- C'est quoi les labels ?
+- Qu'est ce qu'il y a dans le constructeur de Vertex (pourquoi demander un graph) ?
+- (Comment marche le addVertex de graph ? )
