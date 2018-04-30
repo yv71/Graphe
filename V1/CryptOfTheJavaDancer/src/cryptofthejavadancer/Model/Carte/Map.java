@@ -24,7 +24,9 @@ public class Map {
     private final HashMap<Coordonnees,Case> hashMapCases;                       //Stockage par coordonnées des cases
     private final ArrayList<Entite> listeEntite;                                //Liste des entités    
     private final ArrayList<Case> listeCase;                                    //Liste des cases
-    private final ArrayList<Objet> listeObjet;                                  //Liste des objets
+    private final ArrayList<Objet> listeObjet;   
+    //Liste des objets
+    private final ArrayList<Case> CaseVertex;
     private Coordonnees depart;                                                 //Position du point de départ
     private Coordonnees fin;                                                    //Position de la sortie
     
@@ -41,6 +43,7 @@ public class Map {
         this.listeObjet = new ArrayList<>();
         this.joueur = null;
         this.graphe_simple = new Graphe();
+        this.CaseVertex = new ArrayList<>();
     }
     
     //créer la map à partir d'un fichier texte
@@ -62,12 +65,14 @@ public class Map {
                 Case caseAnalyser = this.getCase(li, col);
                 if (caseAnalyser.getType() == Type_Case.Mur || caseAnalyser.getType() == Type_Case.Sol){
                     this.graphe_simple.addVertex(caseAnalyser);
+                    this.CaseVertex.add(caseAnalyser);
                 }
             }
         }
         // generation des neighbours
         for (int i = 0;i < this.graphe_simple.getHashMap().size();i++);
         {
+          
             
         }
     }
