@@ -17,4 +17,19 @@ class VertexCouple {
         this.start = _start;
         this.end = _end;
     }
+    
+    public boolean equals(Object obj){
+        if (obj==this){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    public int hashCode(){
+        return 0;
+    }
+    
+   
 }

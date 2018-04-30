@@ -29,7 +29,9 @@ public class IA_droite extends IA{
         Map mapEntite = entite.getMap();
         Case caseEntite = mapEntite.getCase(entite.getCase().getLigne(), entite.getCase().getColonne());
         Case caseDroite = mapEntite.getCase(entite.getCase().getLigne(), entite.getCase().getColonne()+1);
+        Case caseHaut = mapEntite.getCase(entite.getCase().getLigne()-1, entite.getCase().getColonne());
         Type_Case typeCaseDroite = caseDroite.getType();
+        Type_Case typeCaseHaut = caseHaut.getType();
         if (typeCaseDroite==Type_Case.Sol && caseDroite.getEntite()==null){
             action = Type_Action.deplacement_droite;
         }
@@ -40,6 +42,12 @@ public class IA_droite extends IA{
             action = Type_Action.interagir_droite;
     }
         else if (typeCaseDroite == Type_Case.MurIndestructible){
+            if (typeCaseHaut == Type_Case.Sol){
+                action = Type_Action.deplacement_haut;
+            }
+            else if (typeCaseHaut == Type_Case.Mur){
+                action = Type_Action.interagir_haut;
+            }
         }
         if (caseEntite.getObjet()!=null){
             action = Type_Action.ramasser;

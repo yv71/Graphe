@@ -12,10 +12,22 @@ import java.util.ArrayList;
  * @author Beelzed
  */
 public class Vertex {
+    private Graphe graph;
+    private ArrayList<Vertex> voisins;
     
     public Vertex (Graphe graph){
-        graph.addVertex("this");
+        this.graph = graph;
     }
+    
+    public ArrayList<Vertex> getNeighbours(){
+        return this.voisins;
+    }
+    
+    public void addNeighbour(Vertex v){
+        voisins.add(v);
+    }
+    
+    
     
  
 }

@@ -40,14 +40,42 @@ public class Map {
         this.listeEntite = new ArrayList<>();
         this.listeObjet = new ArrayList<>();
         this.joueur = null;
-        this.graphe_simple = null;
+        this.graphe_simple = new Graphe();
     }
     
     //créer la map à partir d'un fichier texte
     public void chargerFichier(String adresseFichier) throws IOException {
         Parseur parseur = new Parseur(adresseFichier,this);
         parseur.lecture();
-        System.out.println("Niveau chargé.");
+        //this.getInfos();
+        this.genererGrapheSimple();
+        System.out.println(this.getHashMapCases());
+            //Il est possible de rajouter ICI des choses se réalisant juste après le chargement de la carte...
+
+    }
+    
+    
+    private void genererGrapheSimple(){
+        // generation des vertices
+        for(int li = 0; li < 4; li ++) {
+            for (int col = 0; col < 4; col ++){
+                Case caseAnalyser = this.getCase(li, col);
+                if (caseAnalyser.getType() == Type_Case.Mur || caseAnalyser.getType() == Type_Case.Sol){
+                    this.graphe_simple.addVertex(caseAnalyser);
+                }
+            }
+        }
+        // generation des neighbours
+        for (int i = 0;i < this.graphe_simple.getHashMap().size();i++);
+        {
+            
+        }
+    }
+//------------------------------------------------------------------------------
+
+//---------- GETEUR/SETEUR -----------------------------------------------------
+   public void getInfos(){
+       System.out.println("Niveau chargé.");
         System.out.println("Nb squares : " + listeCase.size());
         System.out.println("Nb items : " + listeObjet.size());
         System.out.println("Nb entities : "+ listeEntite.size());
@@ -106,19 +134,8 @@ public class Map {
         System.out.println("Coordonnées de la sortie : \nLigne : " + this.getSortie().getLigne()+ " Colonne : " + this.getSortie().getColonne());
         System.out.println("Coordonnées de Cadence : \nLigne : " + joueur.getCase().getLigne() + " Colonne : "+ joueur.getCase().getColonne());
         System.out.println("Type de la case à gauche de Cadence : "+ this.getCase(joueur.getCase().getLigne(), joueur.getCase().getColonne()-1).getType());
-        this.genererGrapheSimple();
-        System.out.println(this.getHashMapCases());
-            //Il est possible de rajouter ICI des choses se réalisant juste après le chargement de la carte...
-
-
-    }
+   }
     
-    private void genererGrapheSimple(){
-        
-    }
-//------------------------------------------------------------------------------
-
-//---------- GETEUR/SETEUR -----------------------------------------------------
     public Graphe getGrapheSimple(){
         return this.graphe_simple;
     }
