@@ -4,3 +4,5 @@
 - C'est quoi les labels ?
 - Qu'est ce qu'il y a dans le constructeur de Vertex (pourquoi demander un graph) ?
 - (Comment marche le addVertex de graph ? )
+
+test
