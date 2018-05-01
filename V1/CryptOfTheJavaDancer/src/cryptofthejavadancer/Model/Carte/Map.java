@@ -70,10 +70,19 @@ public class Map {
             }
         }
         // generation des neighbours
-        for (int i = 0;i < this.graphe_simple.getHashMap().size();i++);
+        for (int j = 0; j < this.CaseVertex.size()-1; j++)
         {
-          
-            
+          Case caseNow = this.CaseVertex.get(j);
+          int ligneCase = caseNow.getLigne();
+          int colonneCase = caseNow.getColonne();
+          Case caseHaut = this.getCase(ligneCase-1, colonneCase);
+          Case caseGauche = this.getCase(ligneCase, colonneCase-1);
+          Case caseDroite = this.getCase(ligneCase, colonneCase+1);
+          Case caseBas = this.getCase(ligneCase+1, colonneCase);
+          System.out.println(caseHaut.getLigne() + " / " + caseHaut.getColonne());
+        }
+        if (this.getGrapheSimple().getVertex(this.getCase(0, 0))==null){
+            System.out.println("test reussi");
         }
     }
 //------------------------------------------------------------------------------

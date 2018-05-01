@@ -14,13 +14,15 @@ import java.util.ArrayList;
  * @author yv066840*_* 
  */
 public class Graphe {
-    private HashMap<Case,Vertex> Vertices;
-    private HashMap<VertexCouple,Integer> Labels;
+    private final HashMap<Case,Vertex> Vertices;
+    private final HashMap<VertexCouple,Integer> Labels;
+    private final ArrayList<VertexCouple> Edges;
     
     
     public Graphe() {
     Vertices = new HashMap<>();
     Labels = new HashMap<>();
+    Edges = new ArrayList<VertexCouple>();
 }
     public HashMap<Case,Vertex> getHashMap(){
       return  this.Vertices;
