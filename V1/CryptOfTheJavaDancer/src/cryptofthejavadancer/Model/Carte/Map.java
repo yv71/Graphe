@@ -60,11 +60,11 @@ public class Map {
     
     private void genererGrapheSimple(){
         // generation des vertices
-        for(int i = 0; i < listeCase.size(); i ++) {
-            this.graphe_simple.addVertex(listeCase.get(i));
+        for(Case c : listeCase) {
+            this.graphe_simple.addVertex(c);
         }
         // generation des neighbours
-        for (int i = 0; i< listeCase.size(); i++){
+        for (int i : listeCase()){
             if (listeCase.get(i).getType() != Type_Case.MurIndestructible && listeCase.get(i).getType() != Type_Case.MurDur){
                 
             }
