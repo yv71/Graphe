@@ -26,7 +26,7 @@ public class Map {
     private final ArrayList<Case> listeCase;                                    //Liste des cases
     private final ArrayList<Objet> listeObjet;   
     //Liste des objets
-    private final ArrayList<Case> CaseVertex;
+   // private final ArrayList<Case> CaseVertex;
     private Coordonnees depart;                                                 //Position du point de départ
     private Coordonnees fin;                                                    //Position de la sortie
     
@@ -43,7 +43,7 @@ public class Map {
         this.listeObjet = new ArrayList<>();
         this.joueur = null;
         this.graphe_simple = new Graphe();
-        this.CaseVertex = new ArrayList<>();
+       // this.CaseVertex = new ArrayList<>();
     }
     
     //créer la map à partir d'un fichier texte
@@ -60,95 +60,18 @@ public class Map {
     
     private void genererGrapheSimple(){
         // generation des vertices
-        for(int li = 0; li < 4; li ++) {
-            for (int col = 0; col < 4; col ++){
-                Case caseAnalyser = this.getCase(li, col);
-                if (caseAnalyser.getType() == Type_Case.Mur || caseAnalyser.getType() == Type_Case.Sol){
-                    this.graphe_simple.addVertex(caseAnalyser);
-                    this.CaseVertex.add(caseAnalyser);
-                }
-            }
+        for(int i = 0; i < listeCase.size(); i ++) {
+            this.graphe_simple.addVertex(listeCase.get(i));
         }
         // generation des neighbours
-        for (int j = 0; j < this.CaseVertex.size()-1; j++)
-        {
-          Case caseNow = this.CaseVertex.get(j);
-          int ligneCase = caseNow.getLigne();
-          int colonneCase = caseNow.getColonne();
-          Case caseHaut = this.getCase(ligneCase-1, colonneCase);
-          Case caseGauche = this.getCase(ligneCase, colonneCase-1);
-          Case caseDroite = this.getCase(ligneCase, colonneCase+1);
-          Case caseBas = this.getCase(ligneCase+1, colonneCase);
-          System.out.println(caseHaut.getLigne() + " / " + caseHaut.getColonne());
-        }
-        if (this.getGrapheSimple().getVertex(this.getCase(0, 0))==null){
-            System.out.println("test reussi");
+        for (int i = 0; i< listeCase.size(); i++){
+            
         }
     }
 //------------------------------------------------------------------------------
 
 //---------- GETEUR/SETEUR -----------------------------------------------------
-   public void getInfos(){
-       System.out.println("Niveau chargé.");
-        System.out.println("Nb squares : " + listeCase.size());
-        System.out.println("Nb items : " + listeObjet.size());
-        System.out.println("Nb entities : "+ listeEntite.size());
-        int nbPelle=0;
-        int nbSortie = 0;
-        int nbDiamonds=0;        
-        for (int i = 0; i < listeObjet.size(); i++){
-            switch(listeObjet.get(i).getType()){
-                case Diamant:
-                    nbDiamonds ++;
-                    System.out.println("Diamant");
-                    break;
-                case Pelle:
-                    nbPelle ++;
-                    System.out.println("Pelle");
-                    break;
-                case Sortie:
-                    nbSortie ++;
-                    System.out.println("Sortie");
-                    break;
-            }
-        }
-        
-        int nbChauve=0;
-        int SlimeB=0;
-        int SlimeJ=0;
-        int SlimeV=0;
-        int Skel=0;
-        for (int i =0; i< listeEntite.size();i++){
-            switch (listeEntite.get(i).getType()){
-                case ChauveSouris:
-                nbChauve ++;
-                    System.out.println(listeEntite.get(i).getType());
-                break;
-                case SlimeBleu:
-                SlimeB ++;
-                System.out.println(listeEntite.get(i).getType());
-                break;
-                case SlimeJaune:
-                SlimeJ ++;
-                System.out.println(listeEntite.get(i).getType());
-                break;
-                case SlimeVert:
-                SlimeV ++;
-                System.out.println(listeEntite.get(i).getType());
-                break;
-                case Squelette:
-                Skel ++;
-                System.out.println(listeEntite.get(i).getType());
-                break;
-                
-            }
-    }
-        System.out.println("Chauve Souris : "+ nbChauve + "\nSlime Bleu : " + SlimeB + "\nSlime Jaune : "+ SlimeJ + "\nSlimeVert : "+ SlimeV + "\nSquelette : " + Skel);
-        System.out.println("Nb diamonds : " + nbDiamonds);
-        System.out.println("Coordonnées de la sortie : \nLigne : " + this.getSortie().getLigne()+ " Colonne : " + this.getSortie().getColonne());
-        System.out.println("Coordonnées de Cadence : \nLigne : " + joueur.getCase().getLigne() + " Colonne : "+ joueur.getCase().getColonne());
-        System.out.println("Type de la case à gauche de Cadence : "+ this.getCase(joueur.getCase().getLigne(), joueur.getCase().getColonne()-1).getType());
-   }
+  
     
     public Graphe getGrapheSimple(){
         return this.graphe_simple;
@@ -240,5 +163,65 @@ public class Map {
     }
     
 //------------------------------------------------------------------------------
-
+ public void getInfos(){
+       System.out.println("Niveau chargé.");
+        System.out.println("Nb squares : " + listeCase.size());
+        System.out.println("Nb items : " + listeObjet.size());
+        System.out.println("Nb entities : "+ listeEntite.size());
+        int nbPelle=0;
+        int nbSortie = 0;
+        int nbDiamonds=0;        
+        for (int i = 0; i < listeObjet.size(); i++){
+            switch(listeObjet.get(i).getType()){
+                case Diamant:
+                    nbDiamonds ++;
+                    System.out.println("Diamant");
+                    break;
+                case Pelle:
+                    nbPelle ++;
+                    System.out.println("Pelle");
+                    break;
+                case Sortie:
+                    nbSortie ++;
+                    System.out.println("Sortie");
+                    break;
+            }
+        }
+        
+        int nbChauve=0;
+        int SlimeB=0;
+        int SlimeJ=0;
+        int SlimeV=0;
+        int Skel=0;
+        for (int i =0; i< listeEntite.size();i++){
+            switch (listeEntite.get(i).getType()){
+                case ChauveSouris:
+                nbChauve ++;
+                    System.out.println(listeEntite.get(i).getType());
+                break;
+                case SlimeBleu:
+                SlimeB ++;
+                System.out.println(listeEntite.get(i).getType());
+                break;
+                case SlimeJaune:
+                SlimeJ ++;
+                System.out.println(listeEntite.get(i).getType());
+                break;
+                case SlimeVert:
+                SlimeV ++;
+                System.out.println(listeEntite.get(i).getType());
+                break;
+                case Squelette:
+                Skel ++;
+                System.out.println(listeEntite.get(i).getType());
+                break;
+                
+            }
+    }
+        System.out.println("Chauve Souris : "+ nbChauve + "\nSlime Bleu : " + SlimeB + "\nSlime Jaune : "+ SlimeJ + "\nSlimeVert : "+ SlimeV + "\nSquelette : " + Skel);
+        System.out.println("Nb diamonds : " + nbDiamonds);
+        System.out.println("Coordonnées de la sortie : \nLigne : " + this.getSortie().getLigne()+ " Colonne : " + this.getSortie().getColonne());
+        System.out.println("Coordonnées de Cadence : \nLigne : " + joueur.getCase().getLigne() + " Colonne : "+ joueur.getCase().getColonne());
+        System.out.println("Type de la case à gauche de Cadence : "+ this.getCase(joueur.getCase().getLigne(), joueur.getCase().getColonne()-1).getType());
+   }
 }

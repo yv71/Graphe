@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class Graphe {
     private final HashMap<Case,Vertex> Vertices;
-    private final HashMap<VertexCouple,Integer> Labels;
+    private final HashMap<VertexCouple,String> Labels;
     
     
     public Graphe() {
@@ -39,11 +39,11 @@ public class Graphe {
        return  Vertices.get(_case);
     }
     
-    public int getLabel(Case _case1, Case _case2){
+    public String getLabel(Case _case1, Case _case2){
         return Labels.get(new VertexCouple(Vertices.get(_case1),Vertices.get(_case2)));
     }
     
-    public void setLabel(Case _case1, Case _case2, Integer label){
+    public void setLabel(Case _case1, Case _case2, String label){
         Labels.put(new VertexCouple(Vertices.get(_case1),Vertices.get(_case2)), label);
     }
 }
