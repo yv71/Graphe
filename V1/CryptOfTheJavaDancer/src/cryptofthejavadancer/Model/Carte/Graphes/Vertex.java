@@ -17,6 +17,7 @@ public class Vertex {
     
     public Vertex (Graphe graph){
         this.graph = graph;
+        voisins = new ArrayList<Vertex>();
     }
     
     public ArrayList<Vertex> getNeighbours(){

@@ -45,6 +45,7 @@ public class Map {
         this.joueur = null;
         this.graphe_simple = new Graphe();
        // this.CaseVertex = new ArrayList<>();
+       
     }
     
     //créer la map à partir d'un fichier texte
@@ -53,9 +54,10 @@ public class Map {
         parseur.lecture();
         //this.getInfos();
         this.genererGrapheSimple();
-        System.out.println(this.getHashMapCases());
             //Il est possible de rajouter ICI des choses se réalisant juste après le chargement de la carte...
-
+        this.graphe_simple.addVertex(this.getCase(1, 1));
+        this.graphe_simple.addVertex(this.getCase(1, 2));
+        this.graphe_simple.addEdge(getCase(1, 1), getCase(1,2));
     }
     
     
@@ -67,9 +69,15 @@ public class Map {
         // generation des neighbours
         for (Case c  : listeCase){
             for (Case c2 : listeCase){
-                if (c.getType() != Type_Case.MurIndestructible && c.getType() != Type_Case.MurDur && c2.getType() != Type_Case.MurIndestructible && c2.getType() != Type_Case.MurDur){
-                    if (Math.pow(c2.getLigne()- c.getLigne(), 2)+Math.pow(c2.getColonne()-c.getColonne(), 2)==1){
-                        this.graphe_simple.addEdge(c, c2);
+                if (c.getType() != Type_Case.MurIndestructible && c.getType() != Type_Case.MurDur && c2.getType() != Type_Case.MurIndestructible && c2.getType() != Type_Case.MurDur ){
+                    int c2Ligne = c2.getLigne();
+                    int c2Col = c2.getColonne();
+                    int cLigne = c.getLigne();
+                    int cCol = c.getColonne();
+                    int ligne = (int) Math.pow(c2Ligne-cLigne, 2);
+                    int col = (int) Math.pow(c2Col-cCol, 2);
+                    if ((ligne + col)==1){
+                        this.graphe_simple.addEdge(c,c2);
                     }
                 }
                 else {
