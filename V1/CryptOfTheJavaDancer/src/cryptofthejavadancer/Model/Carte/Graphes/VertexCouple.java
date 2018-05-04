@@ -18,8 +18,8 @@ class VertexCouple {
         this.end = _end;
     }
     
-    public boolean equals(Object obj){
-        if (obj==this){
+    public boolean equals(VertexCouple _VertexCouple){
+        if ((_VertexCouple.getStart()==this.start)&&(_VertexCouple.getEnd() == this.end)){
             return true;
         }
         else {
@@ -31,5 +31,11 @@ class VertexCouple {
         return 0;
     }
     
+   public Vertex getStart(){
+       return this.start;
+   }
    
+   public Vertex getEnd(){
+       return this.end;
+   }
 }

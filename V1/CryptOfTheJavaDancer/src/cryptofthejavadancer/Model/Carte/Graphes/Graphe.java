@@ -11,19 +11,19 @@ import cryptofthejavadancer.Model.Carte.Graphes.Vertex;
 import java.util.ArrayList;
 /**
  *
- * @author yv066840*_* 
+ * @author yv066840
  */
 public class Graphe {
     private final HashMap<Case,Vertex> Vertices;
     private final HashMap<VertexCouple,Integer> Labels;
-    private final ArrayList<VertexCouple> Edges;
     
     
     public Graphe() {
     Vertices = new HashMap<>();
     Labels = new HashMap<>();
-    Edges = new ArrayList<VertexCouple>();
-}
+    }
+    
+    
     public HashMap<Case,Vertex> getHashMap(){
       return  this.Vertices;
 }
@@ -32,7 +32,7 @@ public class Graphe {
     }
     
     public void addEdge(Case _case1, Case _case2){
-        
+            Vertices.get(_case1).addNeighbour(Vertices.get(_case2));
     }
     
     public Vertex getVertex(Case _case){
