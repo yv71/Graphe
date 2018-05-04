@@ -14,6 +14,7 @@ import cryptofthejavadancer.Model.Objet.Type_Objet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.lang.Math.*;
 
 /**
  * Carte du jeu
@@ -64,12 +65,16 @@ public class Map {
             this.graphe_simple.addVertex(c);
         }
         // generation des neighbours
-        for (int i : listeCase()){
-            if (listeCase.get(i).getType() != Type_Case.MurIndestructible && listeCase.get(i).getType() != Type_Case.MurDur){
-                
-            }
-            else {
-                
+        for (Case c  : listeCase){
+            for (Case c2 : listeCase){
+                if (c.getType() != Type_Case.MurIndestructible && c.getType() != Type_Case.MurDur && c2.getType() != Type_Case.MurIndestructible && c2.getType() != Type_Case.MurDur){
+                    if (Math.pow(c2.getLigne()- c.getLigne(), 2)+Math.pow(c2.getColonne()-c.getColonne(), 2)==1){
+                        this.graphe_simple.addEdge(c, c2);
+                    }
+                }
+                else {
+
+                }
             }
         }
     }
