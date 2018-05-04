@@ -65,7 +65,12 @@ public class Map {
         }
         // generation des neighbours
         for (int i = 0; i< listeCase.size(); i++){
-            
+            if (listeCase.get(i).getType() != Type_Case.MurIndestructible && listeCase.get(i).getType() != Type_Case.MurDur){
+                
+            }
+            else {
+                
+            }
         }
     }
 //------------------------------------------------------------------------------
