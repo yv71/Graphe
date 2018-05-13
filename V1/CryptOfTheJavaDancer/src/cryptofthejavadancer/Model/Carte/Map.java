@@ -54,10 +54,7 @@ public class Map {
         parseur.lecture();
         //this.getInfos();
         this.genererGrapheSimple();
-            //Il est possible de rajouter ICI des choses se réalisant juste après le chargement de la carte...
-        this.graphe_simple.addVertex(this.getCase(1, 1));
-        this.graphe_simple.addVertex(this.getCase(1, 2));
-        this.graphe_simple.addEdge(getCase(1, 1), getCase(1,2));
+            //Il est possible de rajouter ICI des choses se réalisant juste après le chargement de la carte...S
     }
     
     
@@ -78,6 +75,10 @@ public class Map {
                     int col = (int) Math.pow(c2Col-cCol, 2);
                     if ((ligne + col)==1){
                         this.graphe_simple.addEdge(c,c2);
+                        if (c2.getType() == Type_Case.Mur){
+                            this.graphe_simple.setLabel(c, c2, 2);
+                        }
+                        
                     }
                 }
                 else {
