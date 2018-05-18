@@ -56,8 +56,13 @@ public class Dijkstra {
     }
             
             
+    public void calcul(Vertex _debug, Vertex _fin){
+        
+    }
             
-            
+    public void relaxing(Vertex a, Vertex b){
+        if (distance.get(b)> (distance.get(a)+ this.graph.getLabels().get(new VertexCouple(a,b))))
+    }
     public int maxWeight(){
         int a = 0;
         for (Integer i : graph.getLabels().values()){
@@ -67,4 +72,4 @@ public class Dijkstra {
     }
 }
 
-}
+
