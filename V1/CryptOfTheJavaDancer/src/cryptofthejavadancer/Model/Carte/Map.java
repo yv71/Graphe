@@ -33,6 +33,7 @@ public class Map {
     private Coordonnees fin;                                                    //Position de la sortie
     
     private Graphe graphe_simple;
+    private Graphe graph_avance;
     private Entite_Cadence joueur;                                              //Cadence
     
 //---------- CONSTRUCTEURS -----------------------------------------------------
@@ -45,6 +46,7 @@ public class Map {
         this.listeObjet = new ArrayList<>();
         this.joueur = null;
         this.graphe_simple = new Graphe();
+        this.graph_avance = new Graphe();
        // this.CaseVertex = new ArrayList<>();
        
     }
@@ -55,6 +57,7 @@ public class Map {
         parseur.lecture();
         //this.getInfos();
         this.genererGrapheSimple();
+        this.genererGrapheAvance();
             //Il est possible de rajouter ICI des choses se réalisant juste après le chargement de la carte...S
     }
     
@@ -89,26 +92,48 @@ public class Map {
                         
                     }
                 }
-                this.graphe_simple.afficheMatriceAdjacence(); 
-                
-
-                
-        for (Case c : this.listeCase){
-            System.out.println();
-            for (Case c2 : this.listeCase){
-                if (this.graphe_simple.getLabel(c, c2)!=null){
-                    System.out.print(this.graphe_simple.getLabel(c, c2));
-                }
-                else {
-                    System.out.print("0");
-                }
-                
-            }
-            
+                this.graphe_simple.afficheMatriceAdjacence();             
+           
         }
-        System.out.println();
+    
+    
+     private void genererGrapheAvance(){
+        // generation des vertices
+        for(Case c : listeCase) {
+            this.graph_avance.addVertex(c);
+        }
+        // generation des neighbours
+        for (Case c  : listeCase){
+            for (Case c2 : listeCase){
+                    int c2Ligne = c2.getLigne();
+                    int c2Col = c2.getColonne();
+                    int cLigne = c.getLigne();
+                    int cCol = c.getColonne();
+                    int ligne = Math.abs(c2Ligne-cLigne);
+                    int col = Math.abs(c2Col-cCol);
+                    // ajout des labels
+                    if ((ligne + col)==1){
+                    switch(c2.getType()){
+                        case Mur : this.graph_avance.addEdge(c,c2);
+                        this.graph_avance.setLabel(c,c2,2);
+                        break;
+                        case Sol : this.graph_avance.addEdge(c, c2);
+                        this.graph_avance.setLabel(c, c2, 1);
+                        break;
+                        case MurDur : this.graph_avance.addEdge(c, c2);
+                        this.graph_avance.setLabel(c, c2, 2);
+                        break;
+                        default : System.out.println("oops");
+                    }
+                    }
                
-            }
+                        
+                        
+                    }
+                }
+                this.graphe_simple.afficheMatriceAdjacence();             
+           
+        }
 
 //------------------------------------------------------------------------------
 
@@ -117,6 +142,10 @@ public class Map {
     
     public Graphe getGrapheSimple(){
         return this.graphe_simple;
+    }
+    
+    public Graphe getGraphAvance(){
+        return this.graph_avance;
     }
     
 
