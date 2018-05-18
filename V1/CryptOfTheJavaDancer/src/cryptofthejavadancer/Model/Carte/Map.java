@@ -8,6 +8,7 @@ import cryptofthejavadancer.Model.Carte.Parseur.Parseur;
 import cryptofthejavadancer.Model.Entites.Entite;
 import cryptofthejavadancer.Model.Entites.Entite_Cadence;
 import cryptofthejavadancer.Model.Entites.Type_Entite;
+import static cryptofthejavadancer.Model.Entites.Type_Entite.ChauveSouris;
 import cryptofthejavadancer.Model.IA.IA_droite;
 import cryptofthejavadancer.Model.Objet.Objet;
 import cryptofthejavadancer.Model.Objet.Type_Objet;
@@ -57,7 +58,6 @@ public class Map {
             //Il est possible de rajouter ICI des choses se réalisant juste après le chargement de la carte...S
     }
     
-    
     private void genererGrapheSimple(){
         // generation des vertices
         for(Case c : listeCase) {
@@ -66,27 +66,50 @@ public class Map {
         // generation des neighbours
         for (Case c  : listeCase){
             for (Case c2 : listeCase){
-                if (c.getType() != Type_Case.MurIndestructible && c.getType() != Type_Case.MurDur && c2.getType() != Type_Case.MurIndestructible && c2.getType() != Type_Case.MurDur ){
                     int c2Ligne = c2.getLigne();
                     int c2Col = c2.getColonne();
                     int cLigne = c.getLigne();
                     int cCol = c.getColonne();
-                    int ligne = (int) Math.pow(c2Ligne-cLigne, 2);
-                    int col = (int) Math.pow(c2Col-cCol, 2);
+                    int ligne = Math.abs(c2Ligne-cLigne);
+                    int col = Math.abs(c2Col-cCol);
+                    // ajout des labels
                     if ((ligne + col)==1){
-                        this.graphe_simple.addEdge(c,c2);
-                        if (c2.getType() == Type_Case.Mur){
-                            this.graphe_simple.setLabel(c, c2, 2);
-                        }
+                    switch(c2.getType()){
+                        case Mur : this.graphe_simple.addEdge(c,c2);
+                        this.graphe_simple.setLabel(c,c2,2);
+                        break;
+                        case Sol : this.graphe_simple.addEdge(c, c2);
+                        this.graphe_simple.setLabel(c, c2, 1);
+                        break;
+                        default : System.out.println("oops");
+                    }
+                    }
+               
+                        
                         
                     }
                 }
-                else {
+                this.graphe_simple.afficheMatriceAdjacence(); 
+                
 
+                
+        for (Case c : this.listeCase){
+            System.out.println();
+            for (Case c2 : this.listeCase){
+                if (this.graphe_simple.getLabel(c, c2)!=null){
+                    System.out.print(this.graphe_simple.getLabel(c, c2));
                 }
+                else {
+                    System.out.print("0");
+                }
+                
             }
+            
         }
-    }
+        System.out.println();
+               
+            }
+
 //------------------------------------------------------------------------------
 
 //---------- GETEUR/SETEUR -----------------------------------------------------

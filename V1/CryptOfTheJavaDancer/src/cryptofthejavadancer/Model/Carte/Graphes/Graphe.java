@@ -32,8 +32,8 @@ public class Graphe {
     }
     
     public void addEdge(Case _case1, Case _case2){
-           // getVertex(_case1).addNeighbour(getVertex(_case2));
-           System.out.println(_case1.getColonne() + " " + _case1.getLigne()+ " " + getVertex(_case1));
+            getVertex(_case1).addNeighbour(getVertex(_case2));
+           //System.out.println(_case1.getColonne() + " " + _case1.getLigne()+ " " + getVertex(_case1));
     }
     
     public Vertex getVertex(Case _case){
@@ -46,5 +46,23 @@ public class Graphe {
     
     public void setLabel(Case _case1, Case _case2, Integer label){
         Labels.put(new VertexCouple(Vertices.get(_case1),Vertices.get(_case2)), label);
+    }
+    
+    public void afficheMatriceAdjacence(){
+        System.out.println(Labels.values());
+        for (Case c : Vertices.keySet()){
+            System.out.println();
+            for (Case c2 : Vertices.keySet()){
+                if (this.getLabel(c, c2)!=null){
+                    System.out.print(this.getLabel(c, c2));
+                }
+                else {
+                    System.out.print("0");
+                }
+                
+            }
+            
+        }
+        System.out.println();
     }
 }
