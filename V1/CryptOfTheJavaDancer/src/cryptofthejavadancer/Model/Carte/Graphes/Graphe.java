@@ -23,6 +23,13 @@ public class Graphe {
     Labels = new HashMap<>();
     }
     
+    public HashMap<Case, Vertex> getVertices() {
+        return Vertices;
+    }
+    
+    public HashMap<VertexCouple, Integer> getLabels() {
+        return Labels;
+    }
     
     public HashMap<Case,Vertex> getHashMap(){
       return  this.Vertices;

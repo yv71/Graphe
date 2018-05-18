@@ -7,6 +7,7 @@ package cryptofthejavadancer.Model.Carte.Graphes.Algorithmes;
 
 import cryptofthejavadancer.Model.Carte.Graphes.Graphe;
 import cryptofthejavadancer.Model.Carte.Graphes.Vertex;
+import cryptofthejavadancer.Model.Carte.Graphes.VertexCouple;
 import java.util.ArrayList;
 import java.util.HashMap;
     
@@ -22,6 +23,7 @@ public class Dijkstra {
     private HashMap<Vertex,Boolean> visited;
     private HashMap<Vertex,Vertex> predecessor;
     private ArrayList<Vertex> chemin;
+    private Integer infini;
     
     public Dijkstra (Graphe graph){
     this.graph = graph;
@@ -29,10 +31,11 @@ public class Dijkstra {
     this.visited = new HashMap<Vertex,Boolean>();
     this.predecessor = new HashMap<Vertex,Vertex>();
     this.chemin = new ArrayList<Vertex>();
+    this.infini = null;
     }
     
     public void initialisation(){
-        int max = maxWeight();
+        int max = getInfini();
         for (Vertex v : graph.getVertices().values()){
             distance.put(v,max+1);
             visited.put(v,false);
@@ -42,7 +45,7 @@ public class Dijkstra {
     }
     
     public Vertex closestVertex(){
-      int min = maxWeight();
+      int min = getInfini();
       Vertex plusProche = null;
         for (Vertex v : distance.keySet()){
             if (visited.get(v)==false){
@@ -57,19 +60,32 @@ public class Dijkstra {
             
             
     public void calcul(Vertex _debug, Vertex _fin){
-        
+        this.initialisation();
+        for (int i = 0; i< visited.size(); i++){
+            Vertex a = closestVertex();
+            visited.put(a,true);
+            for (Vertex b : visited.keySet()){
+                relaxing(a,b);
+            }
+        }
     }
             
     public void relaxing(Vertex a, Vertex b){
-        if (distance.get(b)> (distance.get(a)+ this.graph.getLabels().get(new VertexCouple(a,b))))
-    }
-    public int maxWeight(){
-        int a = 0;
-        for (Integer i : graph.getLabels().values()){
-            a += i;
+        if (distance.get(b)> (distance.get(a)+ this.graph.getLabels().get(new VertexCouple(a,b)))){
+            predecessor.put(b, a);
         }
-        return a;
     }
+    public int getInfini(){
+        if(infini == null){
+            for (Integer vLabel : graph.getLabels().values()){
+                infini = 0;
+                infini += vLabel;
+            }
+        }
+        return infini;
+    }
+    
+    
 }
 
 

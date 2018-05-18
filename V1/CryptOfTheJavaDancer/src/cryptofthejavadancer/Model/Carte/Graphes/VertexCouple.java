@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @author Beelzed
  */
-class VertexCouple {
+public class VertexCouple {
     private Vertex start;
     private Vertex end;
     
