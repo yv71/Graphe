@@ -35,7 +35,7 @@ public class Graphe {
       return  this.Vertices;
 }
     public void addVertex(Case _case){
-           Vertices.put(_case, new Vertex(this));
+           Vertices.put(_case, new Vertex(this, _case));
     }
     
     public void addEdge(Case _case1, Case _case2){
@@ -72,4 +72,7 @@ public class Graphe {
         }
         System.out.println();
     }
+   
+    
+
 }

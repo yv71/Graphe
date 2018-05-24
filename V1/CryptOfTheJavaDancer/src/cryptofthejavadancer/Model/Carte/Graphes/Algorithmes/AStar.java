@@ -5,17 +5,18 @@
  */
 package cryptofthejavadancer.Model.Carte.Graphes.Algorithmes;
 
+import cryptofthejavadancer.Model.Carte.Cases.Case;
 import cryptofthejavadancer.Model.Carte.Graphes.Graphe;
 import cryptofthejavadancer.Model.Carte.Graphes.Vertex;
 import cryptofthejavadancer.Model.Carte.Graphes.VertexCouple;
 import java.util.ArrayList;
 import java.util.HashMap;
-    
+
 /**
  *
  * @author yv066840
  */
-public class Dijkstra {
+public class AStar {
     private Graphe graph;
     private Vertex debut;
     private Vertex fin;
@@ -25,7 +26,7 @@ public class Dijkstra {
     private ArrayList<Vertex> path;
     private Integer infini;
     
-    public Dijkstra (Graphe graph){
+    public AStar (Graphe graph){
     this.graph = graph;
     this.distance = new HashMap<Vertex,Integer>();
     this.visited = new HashMap<Vertex,Boolean>();
@@ -33,7 +34,7 @@ public class Dijkstra {
     this.path = new ArrayList<Vertex>();
     this.infini = null;
     }
-    
+ /**
     public void initialisation(){
         int max = getInfini();
         for (Vertex v : graph.getVertices().values()){
@@ -49,9 +50,9 @@ public class Dijkstra {
       Vertex plusProche = null;
         for (Vertex v : distance.keySet()){
             if (visited.get(v)==false){
-                if (distance.get(v)<min){
+                if (heuristic(v)<min){
                     plusProche = v;
-                    min = distance.get(v);
+                    min = heuristic(v);
                 }
             }
         }
@@ -60,13 +61,8 @@ public class Dijkstra {
             
             
     public void calcul(Vertex _debug, Vertex _fin){
-<<<<<<< HEAD
-        this.debut = _debug;
-        this.fin = _fin;
-=======
         debut = _debug;
         fin = _fin;
->>>>>>> aab057797870e7d310a3737c9bd828a459940e37
         this.initialisation();
         for (int i = 0; i< visited.size(); i++){
             Vertex a = closestVertex();
@@ -86,7 +82,6 @@ public class Dijkstra {
     }
             
     public void relaxing(Vertex a, Vertex b){
-        //System.out.println(this.graph.getLabels().get(new VertexCouple(a,b)));
         if(this.graph.getLabels().get(new VertexCouple(a,b)) != null) {
             if (distance.get(b)> (distance.get(a)+ this.graph.getLabels().get(new VertexCouple(a,b)))){
                 distance.put(b, (distance.get(a)+ this.graph.getLabels().get(new VertexCouple(a,b))));
@@ -104,15 +99,17 @@ public class Dijkstra {
         }
         return infini;
     }
-
-    public ArrayList<Vertex> getPath() {
-        return path;
+    
+    public int heuristic(Vertex v){
+        return distance.get(v) + euclidian_distance(v,fin);
     }
     
-    public void destroyFirst(){
-        this.path.remove(0);
-    }
-    
+    public int euclidian_distance(Vertex v, Vertex end){
+        Case cv = this.graph.getCoord(v);
+        Case cend = this.graph.getCoord(end);
+        int x = (int)(Math.pow((cend.getLigne()-cv.getLigne()),2));
+        int y = (int)(Math.pow((cend.getColonne()-cv.getColonne()),2));
+        int max = (int)(Math.sqrt(x+y));
+        return max;
+    } **/
 }
-
-

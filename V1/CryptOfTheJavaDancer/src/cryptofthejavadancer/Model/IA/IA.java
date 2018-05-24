@@ -16,6 +16,7 @@ public abstract class IA {
     
     public IA(Entite _entite) {
         this.entite = _entite;
+        this.turn = 0;
     }
 //------------------------------------------------------------------------------
 

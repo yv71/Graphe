@@ -5,6 +5,7 @@
  */
 package cryptofthejavadancer.Model.Carte.Graphes;
 
+import cryptofthejavadancer.Model.Carte.Cases.Case;
 import java.util.ArrayList;
 
 /**
@@ -14,10 +15,12 @@ import java.util.ArrayList;
 public class Vertex {
     private Graphe graph;
     private ArrayList<Vertex> voisins;
+    private Case c;
     
-    public Vertex (Graphe graph){
+    public Vertex (Graphe graph, Case c){
         this.graph = graph;
         voisins = new ArrayList<Vertex>();
+        this.c = c;
     }
     
     public ArrayList<Vertex> getNeighbours(){
@@ -28,6 +31,13 @@ public class Vertex {
         voisins.add(v);
     }
     
+    public Case getCase(){
+        return this.c;
+    }
+    
+    public String toString(){
+        return "x : " + c.getLigne() + " y : " + c.getColonne();
+    }
 
     
     
