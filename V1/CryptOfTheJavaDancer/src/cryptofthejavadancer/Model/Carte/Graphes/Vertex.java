@@ -28,6 +28,9 @@ public class Vertex {
         voisins.add(v);
     }
     
+    public String toString(){
+        return this.graph.caseVertex(this);
+    }
 
     
     

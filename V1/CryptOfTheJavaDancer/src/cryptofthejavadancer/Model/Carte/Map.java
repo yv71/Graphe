@@ -2,7 +2,9 @@ package cryptofthejavadancer.Model.Carte;
 
 import cryptofthejavadancer.Model.Carte.Cases.Case;
 import cryptofthejavadancer.Model.Carte.Cases.Type_Case;
+import cryptofthejavadancer.Model.Carte.Graphes.Algorithmes.Dijkstra;
 import cryptofthejavadancer.Model.Carte.Graphes.Graphe;
+import cryptofthejavadancer.Model.Carte.Graphes.Vertex;
 import cryptofthejavadancer.Model.Carte.Parseur.Fabrique_Cases;
 import cryptofthejavadancer.Model.Carte.Parseur.Parseur;
 import cryptofthejavadancer.Model.Entites.Entite;
@@ -31,7 +33,7 @@ public class Map {
    // private final ArrayList<Case> CaseVertex;
     private Coordonnees depart;                                                 //Position du point de départ
     private Coordonnees fin;                                                    //Position de la sortie
-    
+    private Dijkstra algo;
     private Graphe graphe_simple;
     private Graphe graph_avance;
     private Entite_Cadence joueur;                                              //Cadence
@@ -47,6 +49,7 @@ public class Map {
         this.joueur = null;
         this.graphe_simple = new Graphe();
         this.graph_avance = new Graphe();
+        this.algo = new Dijkstra(graphe_simple);
        // this.CaseVertex = new ArrayList<>();
        
     }
@@ -58,6 +61,9 @@ public class Map {
         //this.getInfos();
         this.genererGrapheSimple();
         this.genererGrapheAvance();
+        Vertex debut = graphe_simple.getVertex(this.getCase(depart.getLigne(), depart.getColonne()));
+        Vertex fina = graphe_simple.getVertex(this.getCase(fin.getLigne(), fin.getColonne()));
+        this.algo.calcul(debut,fina);
             //Il est possible de rajouter ICI des choses se réalisant juste après le chargement de la carte...S
     }
     

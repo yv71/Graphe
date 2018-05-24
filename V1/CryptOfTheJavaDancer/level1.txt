@@ -1,3 +1,2 @@
-SMI
-DII
-D M
+SM
+Ds

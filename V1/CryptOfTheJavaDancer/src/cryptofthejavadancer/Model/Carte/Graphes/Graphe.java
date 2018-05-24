@@ -72,4 +72,15 @@ public class Graphe {
         }
         System.out.println();
     }
+    
+    public String caseVertex(Vertex v){
+        String retour = "";
+        for (Case c : Vertices.keySet()){
+            
+            if (Vertices.get(c)==v){
+                retour= "x : " + c.getLigne() + " y : " + c.getColonne();
+            }
+        }
+        return retour;
+    }
 }
