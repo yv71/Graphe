@@ -72,13 +72,13 @@ public class Graphe {
         }
         System.out.println();
     }
+   
     
-    public String caseVertex(Vertex v){
-        String retour = "";
+    public Case getCoord(Vertex v){
+        Case retour = null;
         for (Case c : Vertices.keySet()){
-            
             if (Vertices.get(c)==v){
-                retour= "x : " + c.getLigne() + " y : " + c.getColonne();
+                c = retour;
             }
         }
         return retour;

@@ -2,6 +2,7 @@ package cryptofthejavadancer.Model.Carte;
 
 import cryptofthejavadancer.Model.Carte.Cases.Case;
 import cryptofthejavadancer.Model.Carte.Cases.Type_Case;
+import cryptofthejavadancer.Model.Carte.Graphes.Algorithmes.AStar;
 import cryptofthejavadancer.Model.Carte.Graphes.Algorithmes.Dijkstra;
 import cryptofthejavadancer.Model.Carte.Graphes.Graphe;
 import cryptofthejavadancer.Model.Carte.Graphes.Vertex;
@@ -33,10 +34,13 @@ public class Map {
    // private final ArrayList<Case> CaseVertex;
     private Coordonnees depart;                                                 //Position du point de départ
     private Coordonnees fin;                                                    //Position de la sortie
-    private Dijkstra algo;
+ //   private Dijkstra algo;
+ //   private AStar algo2;
     private Graphe graphe_simple;
     private Graphe graph_avance;
     private Entite_Cadence joueur;                                              //Cadence
+    private Vertex debut;
+    private Vertex fina;
     
 //---------- CONSTRUCTEURS -----------------------------------------------------
 
@@ -49,7 +53,8 @@ public class Map {
         this.joueur = null;
         this.graphe_simple = new Graphe();
         this.graph_avance = new Graphe();
-        this.algo = new Dijkstra(graphe_simple);
+    //    this.algo = new Dijkstra(graphe_simple);
+    //    this.algo2 = new AStar(graphe_simple);
        // this.CaseVertex = new ArrayList<>();
        
     }
@@ -61,9 +66,10 @@ public class Map {
         //this.getInfos();
         this.genererGrapheSimple();
         this.genererGrapheAvance();
-        Vertex debut = graphe_simple.getVertex(this.getCase(depart.getLigne(), depart.getColonne()));
-        Vertex fina = graphe_simple.getVertex(this.getCase(fin.getLigne(), fin.getColonne()));
-        this.algo.calcul(debut,fina);
+        debut = graphe_simple.getVertex(this.getCase(depart.getLigne(), depart.getColonne()));
+        fina = graphe_simple.getVertex(this.getCase(fin.getLigne(), fin.getColonne()));
+       // this.algo.calcul(debut,fina);
+        //this.algo2.calcul(debut, fina);
             //Il est possible de rajouter ICI des choses se réalisant juste après le chargement de la carte...S
     }
     
@@ -98,7 +104,7 @@ public class Map {
                         
                     }
                 }
-                this.graphe_simple.afficheMatriceAdjacence();             
+               // this.graphe_simple.afficheMatriceAdjacence();             
            
         }
     
@@ -137,7 +143,7 @@ public class Map {
                         
                     }
                 }
-                this.graphe_simple.afficheMatriceAdjacence();             
+                //this.graphe_simple.afficheMatriceAdjacence();             
            
         }
 
