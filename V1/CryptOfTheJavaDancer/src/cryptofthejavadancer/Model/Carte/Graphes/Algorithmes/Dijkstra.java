@@ -32,6 +32,7 @@ public class Dijkstra {
     this.predecessor = new HashMap<Vertex,Vertex>();
     this.path = new ArrayList<Vertex>();
     this.infini = null;
+        System.out.println(path.isEmpty());
     }
     
     public void initialisation(){
@@ -60,13 +61,10 @@ public class Dijkstra {
             
             
     public void calcul(Vertex _debug, Vertex _fin){
-<<<<<<< HEAD
         this.debut = _debug;
         this.fin = _fin;
-=======
         debut = _debug;
         fin = _fin;
->>>>>>> aab057797870e7d310a3737c9bd828a459940e37
         this.initialisation();
         for (int i = 0; i< visited.size(); i++){
             Vertex a = closestVertex();
@@ -80,6 +78,7 @@ public class Dijkstra {
             path.add(0,v);
             v = predecessor.get(v);
         }
+        path.remove(0);
         System.out.println(path);
         
         
