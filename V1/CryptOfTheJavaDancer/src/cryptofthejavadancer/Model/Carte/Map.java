@@ -30,6 +30,7 @@ public class Map {
     private final ArrayList<Entite> listeEntite;                                //Liste des entités    
     private final ArrayList<Case> listeCase;                                    //Liste des cases
     private final ArrayList<Objet> listeObjet;   
+    private final ArrayList<Case> diamonds;
     //Liste des objets
    // private final ArrayList<Case> CaseVertex;
     private Coordonnees depart;                                                 //Position du point de départ
@@ -53,6 +54,7 @@ public class Map {
         this.joueur = null;
         this.graphe_simple = new Graphe();
         this.graph_avance = new Graphe();
+        this.diamonds = new ArrayList<Case>();
     //    this.algo = new Dijkstra(graphe_simple);
     //    this.algo2 = new AStar(graphe_simple);
        // this.CaseVertex = new ArrayList<>();
@@ -150,7 +152,13 @@ public class Map {
 //------------------------------------------------------------------------------
 
 //---------- GETEUR/SETEUR -----------------------------------------------------
-
+    public ArrayList<Case> getDiamonds(){
+        return this.diamonds;
+    }
+    
+    public void addDiamonds(Case c){
+        this.diamonds.add(c);
+    }
     public Vertex getDebut() {
         return debut;
     }

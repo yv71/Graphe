@@ -3,13 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
+            <file>file:/D:/GIthub_/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/IA/IA_Diamonds.java</file>
+            <file>file:/D:/GIthub_/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Entites/Entite_Cadence.java</file>
+            <file>file:/D:/GIthub_/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Parseur/Fabrique_Cases.java</file>
+            <file>file:/D:/GIthub_/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/IA/IA_sortie.java</file>
+            <file>file:/D:/GIthub_/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Map.java</file>
+            <file>file:/D:/GIthub_/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Parseur/Parseur.java</file>
             <file>file:/D:/GIthub_/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Graphes/Algorithmes/Dijkstra.java</file>
-=======
-            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Graphes/Algorithmes/Dijkstra.java</file>
-            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Graphes/VertexCouple.java</file>
-            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Graphes/Graphe.java</file>
->>>>>>> aab057797870e7d310a3737c9bd828a459940e37
         </group>
     </open-files>
 </project-private>

@@ -7,6 +7,7 @@ package cryptofthejavadancer.Model.IA;
 
 import cryptofthejavadancer.Model.Carte.Cases.Case;
 import cryptofthejavadancer.Model.Entites.Entite;
+import cryptofthejavadancer.Model.Objet.Type_Objet;
 
 /**
  *
@@ -19,13 +20,19 @@ public class IA_Diamonds extends IA{
     }
     
     public Type_Action noeudToAction (Case CaseSuivante){
-        Type_Action retour = Type_Action.acheter;
-        
+        Type_Action retour = Type_Action.attendre;
+        return retour
     }
 
     @Override
     public Type_Action action() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Type_Action retour = Type_Action.attendre;
+       if (this.entite.getCase().getObjet().getType() == Type_Objet.Diamant){
+           retour = Type_Action.ramasser;
+       }
+       else if (turn == 0){
+           
+       }
     }
     
 }
