@@ -60,6 +60,8 @@ public class Dijkstra {
             
             
     public void calcul(Vertex _debug, Vertex _fin){
+        this.debut = _debug;
+        this.fin = _fin;
         this.initialisation();
         for (int i = 0; i< visited.size(); i++){
             Vertex a = closestVertex();
