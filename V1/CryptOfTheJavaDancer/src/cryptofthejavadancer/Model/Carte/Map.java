@@ -150,6 +150,14 @@ public class Map {
 //------------------------------------------------------------------------------
 
 //---------- GETEUR/SETEUR -----------------------------------------------------
+
+    public Vertex getDebut() {
+        return debut;
+    }
+
+    public Vertex getFina() {
+        return fina;
+    }
   
     
     public Graphe getGrapheSimple(){

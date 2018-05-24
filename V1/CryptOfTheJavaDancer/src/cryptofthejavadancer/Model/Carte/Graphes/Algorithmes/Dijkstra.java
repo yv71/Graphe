@@ -104,6 +104,9 @@ public class Dijkstra {
         return path;
     }
     
+    public void destroyFirst(){
+        this.path.remove(0);
+    }
     
 }
 
