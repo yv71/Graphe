@@ -8,6 +8,7 @@ import cryptofthejavadancer.Model.Carte.Cases.Case;
 import cryptofthejavadancer.Model.Carte.Cases.Type_Case;
 import cryptofthejavadancer.Model.Carte.Coordonnees;
 import cryptofthejavadancer.Model.Carte.Graphes.Graphe;
+import cryptofthejavadancer.Model.IA.IA_Diamonds;
 import cryptofthejavadancer.Model.IA.IA_Immobile;
 import cryptofthejavadancer.Model.IA.IA_droite;
 import cryptofthejavadancer.Model.IA.IA_sortie;
@@ -33,7 +34,7 @@ public class Entite_Cadence extends Entite {
         //Fixe le nb de pv
         super(3);         
         //Fixe l'IA de Cadence
-        this.setIA(new IA_sortie(this));
+        this.setIA(new IA_Diamonds(this));
         //Initialisation
         this.nombreDiamant = 0;
         this.nombrePieceOr = 0;
