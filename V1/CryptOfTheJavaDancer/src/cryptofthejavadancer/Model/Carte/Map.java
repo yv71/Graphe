@@ -228,6 +228,16 @@ public class Map {
         return this.depart;
     }
     
+    public Objet getPelle(){
+        Objet pelle = null;
+        for(Objet o : this.listeObjet){
+            if (o.getType() == Type_Objet.Pelle){
+                pelle = o;
+            }
+        }
+        return pelle;
+    }
+    
     //Renvoie la position du point de sortie
     public Coordonnees getSortie() {
         return this.fin;
