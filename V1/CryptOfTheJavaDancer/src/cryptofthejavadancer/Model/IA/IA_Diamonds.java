@@ -24,20 +24,22 @@ public class IA_Diamonds extends IA{
     private Dijkstra algo;
     private boolean tour;
     private boolean firstTurn;
+    private boolean firstTurnAdv;
             
     public IA_Diamonds(Entite _entite) {
         super(_entite);
         this.algo = null;
         this.tour = false;
         this.firstTurn = true;
+        this.firstTurnAdv = true;
         this.turn = 0;
     }
     
-
+    
     @Override
     public Type_Action action() {
        Type_Action retour = Type_Action.attendre;
-       if (this.firstTurn){
+       if (this.firstTurn ){
            this.algo = new Dijkstra(this.getMap().getGrapheSimple());           
            this.firstTurn = false;
            if (this.nearestDiamond()!=null){
@@ -92,8 +94,12 @@ public class IA_Diamonds extends IA{
         return diam;
     }
     
-    
-    
+    public Type_Action actionSimple(){
+        
+    }
+    public Type_Action actionAdv(){
+        
+    }
     public Type_Action noeudToAction (Case CaseSuivante){
         Case cC = this.entite.getCase();
         Type_Action retour = Type_Action.attendre;
@@ -168,11 +174,14 @@ public class IA_Diamonds extends IA{
             }
             
         }
-        System.out.println(retour);
-        System.out.println(this.algo.getPath());
         return retour;
         
     }
+    public Type_Action noeudToActionAdv(Case CaseSuivante){
+        
+    }
 }
+
+
 
 
