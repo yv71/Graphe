@@ -34,7 +34,7 @@ public class AStar {
     this.path = new ArrayList<Vertex>();
     this.infini = null;
     }
- /**
+ 
     public void initialisation(){
         int max = getInfini();
         for (Vertex v : graph.getVertices().values()){
@@ -111,5 +111,5 @@ public class AStar {
         int y = (int)(Math.pow((cend.getColonne()-cv.getColonne()),2));
         int max = (int)(Math.sqrt(x+y));
         return max;
-    } **/
+    } 
 }

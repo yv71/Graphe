@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Graphes/Algorithmes/Dijkstra.java</file>
-            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Graphes/VertexCouple.java</file>
-            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Graphes/Graphe.java</file>
+            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Map.java</file>
+            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Entites/Entite.java</file>
+            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/IA/IA_sortie.java</file>
+            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Entites/Entite_Cadence.java</file>
         </group>
     </open-files>
 </project-private>
