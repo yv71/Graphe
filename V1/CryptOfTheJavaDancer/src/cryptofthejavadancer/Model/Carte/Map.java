@@ -73,7 +73,7 @@ public class Map {
             //Il est possible de rajouter ICI des choses se réalisant juste après le chargement de la carte...S
     }
     
-    private void genererGrapheSimple(){
+    public void genererGrapheSimple(){
         // generation des vertices
         for(Case c : listeCase) {
             this.graphe_simple.addVertex(c);
@@ -109,7 +109,7 @@ public class Map {
         }
     
     
-     private void genererGrapheAvance(){
+    public void genererGrapheAvance(){
         // generation des vertices
         for(Case c : listeCase) {
             this.graph_avance.addVertex(c);

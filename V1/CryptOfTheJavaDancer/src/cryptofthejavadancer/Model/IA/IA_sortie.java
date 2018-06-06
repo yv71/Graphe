@@ -6,10 +6,12 @@
 package cryptofthejavadancer.Model.IA;
 
 import cryptofthejavadancer.Model.Carte.Cases.Case;
+import cryptofthejavadancer.Model.Carte.Cases.Case_Sol;
 import cryptofthejavadancer.Model.Carte.Cases.Type_Case;
 import cryptofthejavadancer.Model.Carte.Graphes.Algorithmes.Dijkstra;
 import cryptofthejavadancer.Model.Carte.Graphes.Graphe;
 import cryptofthejavadancer.Model.Carte.Graphes.Vertex;
+import cryptofthejavadancer.Model.Carte.Graphes.VertexCouple;
 import cryptofthejavadancer.Model.Carte.Map;
 import cryptofthejavadancer.Model.Entites.Entite;
 import cryptofthejavadancer.Model.Entites.Type_Entite;
@@ -34,17 +36,7 @@ public class IA_sortie extends IA {
         Case cC = this.entite.getCase();
         Type_Action retour = Type_Action.attendre;
         int X = cC.getLigne();
-        int Y = cC.getColonne();
-        System.out.println(CaseSuivante.getType());
-        if (CaseSuivante.getEntite() == null ){
-            System.out.println("cnul");
-        }
-        else {
-            System.out.println(CaseSuivante.getEntite().getType());
-        }
-        
-        
-        
+        int Y = cC.getColonne();      
         if (CaseSuivante.getType() == Type_Case.Sol){
             if (CaseSuivante.getEntite() == null){
                 if (CaseSuivante.getLigne() == (X - 1)){
@@ -77,7 +69,7 @@ public class IA_sortie extends IA {
             }
         }
         else {
-            if (tour == false){
+            
                 if (CaseSuivante.getLigne() == (X - 1)){
                         retour = Type_Action.interagir_haut;
                     }
@@ -89,26 +81,15 @@ public class IA_sortie extends IA {
                     }
                     else if (CaseSuivante.getColonne() == (Y+1) ){
                         retour = Type_Action.interagir_droite;
+                    } 
+                    
+                    for(Vertex v : this.algo.getGraph().getVertices().values()){
+                        if (v.getNeighbours().contains(this.getGraph().getVertex(CaseSuivante))){
+                            VertexCouple vC = new VertexCouple(v, this.getGraph().getVertex(CaseSuivante));
+                            this.getGraph().getLabels().put(vC,1);                            
+                        }
                     }
-                tour = true;
-            }
-            else {
-                if (CaseSuivante.getLigne() == (X - 1)){
-                    retour = Type_Action.deplacement_haut;
-                }
-                else if (CaseSuivante.getLigne() == (X+1)){
-                    retour = Type_Action.deplacement_bas;
-                }
-                else if (CaseSuivante.getColonne() == (Y-1)){
-                    retour = Type_Action.deplacement_gauche;
-                }
-                else if (CaseSuivante.getColonne() == (Y+1) ){
-                    retour = Type_Action.deplacement_droite;
-                }
-                this.algo.destroyFirst();
-                tour = false;
-            }
-            
+                    algo.getGraph().getVertices().put(new Case_Sol(CaseSuivante.getLigne(),CaseSuivante.getColonne(),getMap()),algo.getGraph().getVertex(CaseSuivante));
         }
         System.out.println(retour);
         System.out.println(this.algo.getPath());
@@ -133,4 +114,7 @@ public class IA_sortie extends IA {
         return retour;
     }
     
+    public Graphe getGraph(){
+        return this.algo.getGraph();
+    }
 }

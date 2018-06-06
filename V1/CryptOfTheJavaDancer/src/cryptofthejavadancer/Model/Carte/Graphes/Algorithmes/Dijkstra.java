@@ -48,8 +48,8 @@ public class Dijkstra {
     public Vertex closestVertex(){
       int min = getInfini()+1;
       Vertex plusProche = null;
-        for (Vertex v : distance.keySet()){
-            if (visited.get(v)==false){
+        for (Vertex v : distance.keySet()){          
+             if (visited.get(v)==false){
                 if (distance.get(v)<min){
                     plusProche = v;
                     min = distance.get(v);
@@ -128,6 +128,12 @@ public class Dijkstra {
     public void destroyFirst(){
         this.path.remove(0);
     }
+
+    public Graphe getGraph() {
+        return graph;
+    }
+    
+    
     
 }
 
