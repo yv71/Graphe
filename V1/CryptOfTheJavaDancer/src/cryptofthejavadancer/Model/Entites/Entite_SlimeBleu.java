@@ -13,7 +13,7 @@ public class Entite_SlimeBleu extends Entite_Monstre {
 
     public Entite_SlimeBleu() {
         super(2);
-        this.setIA(new IA_SlimeBleu(this));
+        this.setIA(new IA_Immobile(this));
     }
     
 //------------------------------------------------------------------------------

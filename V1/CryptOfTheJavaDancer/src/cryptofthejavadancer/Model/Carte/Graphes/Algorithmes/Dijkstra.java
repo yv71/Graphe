@@ -36,6 +36,7 @@ public class Dijkstra {
     
     public void initialisation(){
         int max = getInfini();
+        this.path = new ArrayList<Vertex>();
         for (Vertex v : graph.getVertices().values()){
             distance.put(v,max);
             visited.put(v,false);
@@ -60,6 +61,27 @@ public class Dijkstra {
             
             
     public void calcul(Vertex _debug, Vertex _fin){
+        this.debut = _debug;
+        this.fin = _fin;
+        this.initialisation();
+        for (int i = 0; i< visited.size(); i++){
+            Vertex a = closestVertex();
+            visited.put(a,true);
+            for (Vertex b : visited.keySet()){
+                relaxing(a,b);
+            }
+        }
+        Vertex v = fin;
+        while (v !=null){
+            path.add(0,v);
+            v = predecessor.get(v);
+        }
+        path.remove(0);
+        
+        
+    }
+    
+    public int pathLength(Vertex _debug, Vertex _fin){
         debut = _debug;
         fin = _fin;
         this.initialisation();
@@ -75,9 +97,8 @@ public class Dijkstra {
             path.add(0,v);
             v = predecessor.get(v);
         }
-        System.out.println(path);
-        
-        
+        path.remove(0);    
+        return path.size();
     }
             
     public void relaxing(Vertex a, Vertex b){

@@ -96,7 +96,7 @@ public class Map {
                         case Sol : this.graphe_simple.addEdge(c, c2);
                         this.graphe_simple.setLabel(c, c2, 1);
                         break;
-                        default : System.out.println("oops");
+                        default : ;
                     }
                     }
                
@@ -135,7 +135,7 @@ public class Map {
                         case MurDur : this.graph_avance.addEdge(c, c2);
                         this.graph_avance.setLabel(c, c2, 2);
                         break;
-                        default : System.out.println("oops");
+                        default : ;
                     }
                     }
                
@@ -226,6 +226,16 @@ public class Map {
     //Renvoie la position du point de départ
     public Coordonnees getDepart() {
         return this.depart;
+    }
+    
+    public Objet getPelle(){
+        Objet pelle = null;
+        for(Objet o : this.listeObjet){
+            if (o.getType() == Type_Objet.Pelle){
+                pelle = o;
+            }
+        }
+        return pelle;
     }
     
     //Renvoie la position du point de sortie
