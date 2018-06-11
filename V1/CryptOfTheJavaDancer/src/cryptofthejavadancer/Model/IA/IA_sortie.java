@@ -85,8 +85,8 @@ public class IA_sortie extends IA {
                     
                     for(Vertex v : this.algo.getGraph().getVertices().values()){
                         if (v.getNeighbours().contains(this.getGraph().getVertex(CaseSuivante))){
-                            VertexCouple vC = new VertexCouple(v, this.getGraph().getVertex(CaseSuivante));
-                            this.getGraph().getLabels().put(vC,1);                            
+                            VertexCouple cV = new VertexCouple(this.getGraph().getVertex(CaseSuivante),v);
+                            this.getGraph().getLabels().put(cV,1);
                         }
                     }
                     algo.getGraph().getVertices().put(new Case_Sol(CaseSuivante.getLigne(),CaseSuivante.getColonne(),getMap()),algo.getGraph().getVertex(CaseSuivante));
@@ -114,7 +114,5 @@ public class IA_sortie extends IA {
         return retour;
     }
     
-    public Graphe getGraph(){
-        return this.algo.getGraph();
-    }
+
 }
