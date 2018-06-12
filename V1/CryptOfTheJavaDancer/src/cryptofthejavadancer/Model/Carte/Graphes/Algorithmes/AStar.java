@@ -34,8 +34,8 @@ public class AStar {
     this.path = new ArrayList<Vertex>();
     this.infini = null;
     }
- /**
-    public void initialisation(){
+ 
+  /**  public void initialisation(){
         int max = getInfini();
         for (Vertex v : graph.getVertices().values()){
             distance.put(v,max);
@@ -64,6 +64,7 @@ public class AStar {
         debut = _debug;
         fin = _fin;
         this.initialisation();
+        
         for (int i = 0; i< visited.size(); i++){
             Vertex a = closestVertex();
             visited.put(a,true);
@@ -111,5 +112,6 @@ public class AStar {
         int y = (int)(Math.pow((cend.getColonne()-cv.getColonne()),2));
         int max = (int)(Math.sqrt(x+y));
         return max;
-    } **/
+    }
+    * */
 }

@@ -39,7 +39,9 @@ public class Vertex {
         return "x : " + c.getLigne() + " y : " + c.getColonne();
     }
 
-    
+    public void setCase(Case c){
+        this.c= c;
+    }
     
  
 }

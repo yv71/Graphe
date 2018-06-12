@@ -30,7 +30,6 @@ public class Map {
     private final ArrayList<Entite> listeEntite;                                //Liste des entités    
     private final ArrayList<Case> listeCase;                                    //Liste des cases
     private final ArrayList<Objet> listeObjet;   
-    private final ArrayList<Case> diamonds;
     //Liste des objets
    // private final ArrayList<Case> CaseVertex;
     private Coordonnees depart;                                                 //Position du point de départ
@@ -54,7 +53,6 @@ public class Map {
         this.joueur = null;
         this.graphe_simple = new Graphe();
         this.graph_avance = new Graphe();
-        this.diamonds = new ArrayList<Case>();
     //    this.algo = new Dijkstra(graphe_simple);
     //    this.algo2 = new AStar(graphe_simple);
        // this.CaseVertex = new ArrayList<>();
@@ -75,7 +73,7 @@ public class Map {
             //Il est possible de rajouter ICI des choses se réalisant juste après le chargement de la carte...S
     }
     
-    private void genererGrapheSimple(){
+    public void genererGrapheSimple(){
         // generation des vertices
         for(Case c : listeCase) {
             this.graphe_simple.addVertex(c);
@@ -98,7 +96,7 @@ public class Map {
                         case Sol : this.graphe_simple.addEdge(c, c2);
                         this.graphe_simple.setLabel(c, c2, 1);
                         break;
-                        default : System.out.println("oops");
+                        default : ;
                     }
                     }
                
@@ -111,7 +109,7 @@ public class Map {
         }
     
     
-     private void genererGrapheAvance(){
+    public void genererGrapheAvance(){
         // generation des vertices
         for(Case c : listeCase) {
             this.graph_avance.addVertex(c);
@@ -137,7 +135,7 @@ public class Map {
                         case MurDur : this.graph_avance.addEdge(c, c2);
                         this.graph_avance.setLabel(c, c2, 2);
                         break;
-                        default : System.out.println("oops");
+                        default : ;
                     }
                     }
                
@@ -152,13 +150,7 @@ public class Map {
 //------------------------------------------------------------------------------
 
 //---------- GETEUR/SETEUR -----------------------------------------------------
-    public ArrayList<Case> getDiamonds(){
-        return this.diamonds;
-    }
-    
-    public void addDiamonds(Case c){
-        this.diamonds.add(c);
-    }
+
     public Vertex getDebut() {
         return debut;
     }
@@ -234,6 +226,16 @@ public class Map {
     //Renvoie la position du point de départ
     public Coordonnees getDepart() {
         return this.depart;
+    }
+    
+    public Objet getPelle(){
+        Objet pelle = null;
+        for(Objet o : this.listeObjet){
+            if (o.getType() == Type_Objet.Pelle){
+                pelle = o;
+            }
+        }
+        return pelle;
     }
     
     //Renvoie la position du point de sortie

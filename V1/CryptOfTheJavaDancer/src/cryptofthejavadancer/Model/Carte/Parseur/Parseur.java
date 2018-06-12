@@ -60,7 +60,6 @@ public class Parseur {
             //gestion des objets
             switch(c) {
                 case 'd' : this.map.ajouteObjet(numLigne,numColonne, new Objet_Diamant()); 
-                this.map.addDiamonds(this.map.getCase(numLigne, numColonne));
                 break;
                 case 'p' : this.map.ajouteObjet(numLigne,numColonne, new Objet_Pelle()); break;
                 case 's' : this.map.ajouteObjet(numLigne,numColonne, new Objet_Sortie()); this.map.setSortie(numLigne, numColonne); break;

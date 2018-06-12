@@ -32,11 +32,11 @@ public class Dijkstra {
     this.predecessor = new HashMap<Vertex,Vertex>();
     this.path = new ArrayList<Vertex>();
     this.infini = null;
-        System.out.println(path.isEmpty());
     }
     
     public void initialisation(){
         int max = getInfini();
+        this.path = new ArrayList<Vertex>();
         for (Vertex v : graph.getVertices().values()){
             distance.put(v,max);
             visited.put(v,false);
@@ -48,8 +48,8 @@ public class Dijkstra {
     public Vertex closestVertex(){
       int min = getInfini()+1;
       Vertex plusProche = null;
-        for (Vertex v : distance.keySet()){
-            if (visited.get(v)==false){
+        for (Vertex v : distance.keySet()){          
+             if (visited.get(v)==false){
                 if (distance.get(v)<min){
                     plusProche = v;
                     min = distance.get(v);
@@ -63,6 +63,23 @@ public class Dijkstra {
     public void calcul(Vertex _debug, Vertex _fin){
         this.debut = _debug;
         this.fin = _fin;
+        this.initialisation();
+        for (int i = 0; i< visited.size(); i++){
+            Vertex a = closestVertex();
+            visited.put(a,true);
+            for (Vertex b : visited.keySet()){
+                relaxing(a,b);
+            }
+        }
+        Vertex v = fin;
+        while (v !=null){
+            path.add(0,v);
+            v = predecessor.get(v);
+        }
+        path.remove(0);      
+    }
+    
+    public int pathLength(Vertex _debug, Vertex _fin){
         debut = _debug;
         fin = _fin;
         this.initialisation();
@@ -78,10 +95,8 @@ public class Dijkstra {
             path.add(0,v);
             v = predecessor.get(v);
         }
-        path.remove(0);
-        System.out.println(path);
-        
-        
+        path.remove(0);    
+        return path.size();
     }
             
     public void relaxing(Vertex a, Vertex b){
@@ -111,6 +126,21 @@ public class Dijkstra {
     public void destroyFirst(){
         this.path.remove(0);
     }
+
+    public Graphe getGraph() {
+        return graph;
+    }
+    
+    public ArrayList<Vertex> getPath(Vertex start, Vertex end){
+        ArrayList<Vertex> pathR = new ArrayList<>();
+        Vertex v = end;
+        while (v !=start){
+            pathR.add(0,v);
+            v = predecessor.get(v);
+        }
+        return pathR;
+    }
+    
     
 }
 
