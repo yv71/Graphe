@@ -11,6 +11,7 @@ import cryptofthejavadancer.Model.Carte.Cases.Type_Case;
 import cryptofthejavadancer.Model.Carte.Graphes.Algorithmes.Dijkstra;
 import cryptofthejavadancer.Model.Carte.Graphes.Vertex;
 import cryptofthejavadancer.Model.Carte.Graphes.VertexCouple;
+import cryptofthejavadancer.Model.Carte.Map;
 import cryptofthejavadancer.Model.Entites.Entite;
 import cryptofthejavadancer.Model.Entites.Type_Entite;
 import cryptofthejavadancer.Model.Objet.Objet;
@@ -21,152 +22,197 @@ import java.util.ArrayList;
  *
  * @author Beelzed
  */
-public class IA_DiamondsOpti extends IA{
+public class IA_DiamondsOpti extends IA {
 
     private ArrayList<Objet> diamonds;
     private Boolean firstTurn;
     private ArrayList<Vertex> localPath;
-    
-    
+    private Dijkstra dij;
+
     public IA_DiamondsOpti(Entite _entite) {
         super(_entite);
         algo = null;
         diamonds = new ArrayList<>();
         firstTurn = true;
         localPath = new ArrayList<>();
-        
+        dij = null;
     }
 
     public Type_Action action() {
+        Type_Action action = Type_Action.attendre;
+        Case dest = this.getCase();
+        if (firstTurn) {
+            Map map = this.getEntite().getMap();
+            //Génération de la liste des diamants
+            for (Objet o : map.getListeObjet()) {
+                if (o.getType() == Type_Objet.Diamant) {
+                    diamonds.add(o);
+                }
+            }
+            //Génération de l'algo
+            algo = new Dijkstra(map.getGrapheSimple());
+            dij = new Dijkstra(map.getGrapheSimple());
+            algo.calcul(this.getGraph().getVertex(this.getCase()), this.getGraph().getVertex(map.getCaseFin()));
+            firstTurn = false;
+        }
+        if (dij.getPath().isEmpty()) {
+            //Interaction
+            if (this.getCase().getObjet() != null) {
+                if (this.getCase().getObjet().getType() == Type_Objet.Diamant) {
+                    action = Type_Action.ramasser;
+                    diamonds.remove(this.getCase().getObjet());
+                }
+                if (this.getCase().getObjet().getType() == Type_Objet.Sortie) {
+                    action = Type_Action.sortir;
+                }
+            }
+            //Si il y a un diamant accessible on récupère le plus proche
+            dest = this.calculDest();
+        } else {
+            action = noeudToAction(dij.getPath().get(0).getCase());
+        }
+        return action;
+    }
+
+    public Type_Action actionD() {
         Type_Action retour = Type_Action.attendre;
-        if (firstTurn){
+        if (firstTurn) {
             this.algo = new Dijkstra(this.getMap().getGrapheSimple());
             this.algo.calcul(this.getMap().getDebut(), this.getMap().getFina());
-            for (Objet o : this.entite.getMap().getListeObjet()){
-                if (o.getType() == Type_Objet.Diamant){
+            for (Objet o : this.entite.getMap().getListeObjet()) {
+                if (o.getType() == Type_Objet.Diamant) {
                     this.diamonds.add(o);
                 }
             }
-            if (this.nearestDiamond()!=null){
-               localPath = algo.getPath(getMap().getDebut(),getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
-               diamonds.remove(nearestDiamond());
-           }
-           else {
-               algo.calcul(getMap().getDebut(),getMap().getFina());
-               localPath = this.algo.getPath();
-               
-           }
-           firstTurn = false;
+            if (this.nearestDiamond() != null) {
+                localPath = algo.getPath(getMap().getDebut(), getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
+                diamonds.remove(nearestDiamond());
+            } else {
+                algo.calcul(getMap().getDebut(), getMap().getFina());
+                localPath = this.algo.getPath();
+
+            }
+            firstTurn = false;
         }
-        if (this.entite.getCase().getObjet()!=null){
-            if (this.entite.getCase().getObjet().getType() == Type_Objet.Diamant || this.entite.getCase().getObjet().getType()== Type_Objet.Pelle){
+        if (this.entite.getCase().getObjet() != null) {
+            if (this.entite.getCase().getObjet().getType() == Type_Objet.Diamant || this.entite.getCase().getObjet().getType() == Type_Objet.Pelle) {
                 retour = Type_Action.ramasser;
-                if (this.nearestDiamond()!=null){
-                    localPath = algo.getPath(getMap().getDebut(),getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
+                if (this.nearestDiamond() != null) {
+                    localPath = algo.getPath(getMap().getDebut(), getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
                     diamonds.remove(nearestDiamond());
-                }                
-                else {
+                } else {
                     algo.calcul(this.getMap().getGrapheSimple().getVertex(getMap().getJoueur().getCase()), getMap().getFina());
                     localPath = this.algo.getPath();
                 }
-            }
-            else if(this.entite.getCase().getObjet().getType() == Type_Objet.Sortie){
+            } else if (this.entite.getCase().getObjet().getType() == Type_Objet.Sortie) {
                 retour = Type_Action.sortir;
             }
-       }
-       else {
-           retour = noeudToAction(localPath.get(0).getCase());
-       }
+        } else {
+            retour = noeudToAction(localPath.get(0).getCase());
+        }
+        System.out.println(localPath);
+        System.out.println(retour);
         return retour;
-    } 
-    
-    public Objet nearestDiamond(){
+    }
+
+    public Objet nearestDiamond() {
         Objet diam = null;
         int minDistance = this.algo.getInfini();
+        for (Objet o : this.diamonds) {
+            int dist = this.algo.getTaillePath(this.getGraph().getVertex(o.getCase()));
+            if (dist < minDistance) {
+                diam = o;
+                minDistance = dist;
 
-        if (!this.diamonds.isEmpty()){             
-             for (Objet o : this.diamonds){
-                 int dist = this.getPath(this.getGraph().getVertex(this.getMap().getJoueur().getCase()), this.getGraph().getVertex(o.getCase())).size();
-                 if (dist < minDistance){
-                     diam = o;
-                     minDistance = dist;
-                 }
-             }
+            }
         }
-       return diam;
+        return diam;
     }
-    
-    public ArrayList<Vertex> getPath(Vertex start, Vertex end){
+
+    public ArrayList<Vertex> getPath(Vertex start, Vertex end) {
         return this.algo.getPath(start, end);
     }
-    
-    public Type_Action noeudToAction (Case CaseSuivante){
+
+    public Type_Action noeudToAction(Case CaseSuivante) {
         Case cC = this.entite.getCase();
         Type_Action retour = Type_Action.attendre;
         int X = cC.getLigne();
-        int Y = cC.getColonne();        
-        if (CaseSuivante.getType() == Type_Case.Sol){
-            if (CaseSuivante.getEntite() == null){
-                if (CaseSuivante.getLigne() == (X - 1)){
+        int Y = cC.getColonne();
+        if (CaseSuivante.getType() == Type_Case.Sol) {
+            if (CaseSuivante.getEntite() == null) {
+                if (CaseSuivante.getLigne() == (X - 1)) {
                     retour = Type_Action.deplacement_haut;
-                }
-                else if (CaseSuivante.getLigne() == (X+1)){
+                } else if (CaseSuivante.getLigne() == (X + 1)) {
                     retour = Type_Action.deplacement_bas;
-                }
-                else if (CaseSuivante.getColonne() == (Y-1)){
+                } else if (CaseSuivante.getColonne() == (Y - 1)) {
                     retour = Type_Action.deplacement_gauche;
-                }
-                else if (CaseSuivante.getColonne() == (Y+1) ){
+                } else if (CaseSuivante.getColonne() == (Y + 1)) {
                     retour = Type_Action.deplacement_droite;
                 }
+
                 this.algo.destroyFirst();
-            }
-            else if( CaseSuivante.getEntite().getType() != Type_Entite.Cadence){
-                if (CaseSuivante.getLigne() == (X - 1)){
+                this.localPath.remove(0);
+            } else if (CaseSuivante.getEntite().getType() != Type_Entite.Cadence) {
+                if (CaseSuivante.getLigne() == (X - 1)) {
                     retour = Type_Action.interagir_haut;
-                }
-                else if (CaseSuivante.getLigne() == (X+1)){
+                } else if (CaseSuivante.getLigne() == (X + 1)) {
                     retour = Type_Action.interagir_bas;
-                }
-                else if (CaseSuivante.getColonne() == (Y-1)){
+                } else if (CaseSuivante.getColonne() == (Y - 1)) {
                     retour = Type_Action.interagir_gauche;
-                }
-                else if (CaseSuivante.getColonne() == (Y+1) ){
+                } else if (CaseSuivante.getColonne() == (Y + 1)) {
                     retour = Type_Action.interagir_droite;
                 }
             }
+        } else {
+
+            if (CaseSuivante.getLigne() == (X - 1)) {
+                retour = Type_Action.interagir_haut;
+            } else if (CaseSuivante.getLigne() == (X + 1)) {
+                retour = Type_Action.interagir_bas;
+            } else if (CaseSuivante.getColonne() == (Y - 1)) {
+                retour = Type_Action.interagir_gauche;
+            } else if (CaseSuivante.getColonne() == (Y + 1)) {
+                retour = Type_Action.interagir_droite;
+            }
+            for (Vertex v : this.algo.getGraph().getVertices().values()) {
+                if (v.getNeighbours().contains(this.getGraph().getVertex(CaseSuivante))) {
+                    VertexCouple vC = new VertexCouple(v, this.getGraph().getVertex(CaseSuivante));
+                    this.getGraph().getLabels().replace(vC, 2, 1);
+                }
+            }
+            Case test = new Case_Sol(CaseSuivante.getLigne(), CaseSuivante.getColonne(), getMap());
+            Vertex v = algo.getGraph().getVertex(CaseSuivante);
+            v.setCase(test);
+            algo.getGraph().getVertices().remove(CaseSuivante, v);
+            algo.getGraph().getVertices().put(test, v);
+
         }
-        else {
-           
-                if (CaseSuivante.getLigne() == (X - 1)){
-                        retour = Type_Action.interagir_haut;
-                    }
-                    else if (CaseSuivante.getLigne() == (X+1)){
-                        retour = Type_Action.interagir_bas;
-                    }
-                    else if (CaseSuivante.getColonne() == (Y-1)){
-                        retour = Type_Action.interagir_gauche;
-                    }
-                    else if (CaseSuivante.getColonne() == (Y+1) ){
-                        retour = Type_Action.interagir_droite;
-                    }
-                for(Vertex v : this.algo.getGraph().getVertices().values()){
-                        if (v.getNeighbours().contains(this.getGraph().getVertex(CaseSuivante))){
-                            VertexCouple vC = new VertexCouple(v,this.getGraph().getVertex(CaseSuivante));
-                            this.getGraph().getLabels().replace(vC,2,1);
-                        }
-                    }
-                Case test = new Case_Sol(CaseSuivante.getLigne(),CaseSuivante.getColonne(),getMap());
-                Vertex v = algo.getGraph().getVertex(CaseSuivante);
-                v.setCase(test);
-                algo.getGraph().getVertices().remove(CaseSuivante,v);
-                algo.getGraph().getVertices().put(test,v);
-                
-             
-            
-        }
+
         return retour;
-        
+
     }
-    
+
+    public Case calculDest() {
+        Case dest = this.getCase();
+        Map map = this.getMap();
+        boolean diamAcc = false;
+        for (Objet o : diamonds) {
+            if (algo.getTaillePath(this.getGraph().getVertex(o.getCase())) < algo.getInfini()) {
+                diamAcc = true;
+            }
+        }
+        if (diamAcc) {
+            int dist = algo.getInfini() + 1;
+            for (Objet o : diamonds) {
+                if (algo.getTaillePath(this.getGraph().getVertex(o.getCase())) < dist && algo.getTaillePath(this.getGraph().getVertex(o.getCase())) != 0) {
+                    dist = algo.getTaillePath(this.getGraph().getVertex(o.getCase()));
+                    dest = o.getCase();
+                }
+            }
+        } else {
+            dest = map.getCaseFin();
+        }
+        dij.calcul(this.getGraph().getVertex(this.getCase()), this.getGraph().getVertex(dest));
+        return dest;
+    }
 }

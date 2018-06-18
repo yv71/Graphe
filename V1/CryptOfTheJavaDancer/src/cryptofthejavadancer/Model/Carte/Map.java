@@ -1,6 +1,7 @@
 package cryptofthejavadancer.Model.Carte;
 
 import cryptofthejavadancer.Model.Carte.Cases.Case;
+import cryptofthejavadancer.Model.Carte.Cases.Case_Sol;
 import cryptofthejavadancer.Model.Carte.Cases.Type_Case;
 import cryptofthejavadancer.Model.Carte.Graphes.Algorithmes.AStar;
 import cryptofthejavadancer.Model.Carte.Graphes.Algorithmes.Dijkstra;
@@ -36,6 +37,7 @@ public class Map {
     private Coordonnees fin;                                                    //Position de la sortie
  //   private Dijkstra algo;
  //   private AStar algo2;
+    private Case cF;
     private Graphe graphe_simple;
     private Graphe graph_avance;
     private Entite_Cadence joueur;                                              //Cadence
@@ -66,6 +68,7 @@ public class Map {
         //this.getInfos();
         this.genererGrapheSimple();
         this.genererGrapheAvance();
+        cF = new Case_Sol(fin.getLigne(),fin.getColonne(),this);
         debut = graphe_simple.getVertex(this.getCase(depart.getLigne(), depart.getColonne()));
         fina = graphe_simple.getVertex(this.getCase(fin.getLigne(), fin.getColonne()));
        // this.algo.calcul(debut,fina);
@@ -168,6 +171,9 @@ public class Map {
         return this.graph_avance;
     }
     
+    public Case getCaseFin(){
+        return this.cF;
+    }
 
     //Renvoie la case présente à ses coordonnées
     public Case getCase(int ligne,int colonne) {
