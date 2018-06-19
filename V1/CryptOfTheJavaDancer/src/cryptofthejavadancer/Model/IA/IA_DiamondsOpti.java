@@ -38,25 +38,6 @@ public class IA_DiamondsOpti extends IA {
         dij = null;
     }
 
-    /**
-     * public Type_Action action() { Type_Action action = Type_Action.attendre;
-     * Case dest = this.getCase(); if (firstTurn) { Map map =
-     * this.getEntite().getMap(); //Génération de la liste des diamants for
-     * (Objet o : map.getListeObjet()) { if (o.getType() == Type_Objet.Diamant)
-     * { diamonds.add(o); } } //Génération de l'algo algo = new
-     * Dijkstra(map.getGrapheSimple()); dij = new
-     * Dijkstra(map.getGrapheSimple());
-     * algo.calcul(this.getGraph().getVertex(this.getCase()),
-     * this.getGraph().getVertex(map.getCaseFin())); firstTurn = false; } if
-     * (dij.getPath().isEmpty()) { //Interaction if (this.getCase().getObjet()
-     * != null) { if (this.getCase().getObjet().getType() == Type_Objet.Diamant)
-     * { action = Type_Action.ramasser;
-     * diamonds.remove(this.getCase().getObjet()); } if
-     * (this.getCase().getObjet().getType() == Type_Objet.Sortie) { action =
-     * Type_Action.sortir; } } //Si il y a un diamant accessible on récupère le
-     * plus proche dest = this.calculDest(); } else { action =
-     * noeudToAction(dij.getPath().get(0).getCase()); } return action; }*
-     */
     public Type_Action action() {
         //System.out.println(localPath);
         Type_Action retour = Type_Action.attendre;
@@ -70,12 +51,10 @@ public class IA_DiamondsOpti extends IA {
             }
             if (this.nearestDiamond() != null) {
                 localPath = algo.getPath(getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
-                localPath.remove(0);
                 diamonds.remove(nearestDiamond());
             } else {
                 algo.calcul(getMap().getDebut(), getMap().getFina());
                 localPath = this.algo.getPath();
-                localPath.remove(0);
             }
             firstTurn = false;
         }
@@ -87,7 +66,6 @@ public class IA_DiamondsOpti extends IA {
                     System.out.println("diamantleplusproche : " + this.nearestDiamond());
                     if (this.nearestDiamond() != null) {
                         localPath = algo.getPath(getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
-                        localPath.remove(0);
                         diamonds.remove(nearestDiamond());
                     } else {
                         algo.calcul(this.getMap().getGrapheSimple().getVertex(getMap().getJoueur().getCase()), getMap().getFina());
@@ -104,6 +82,7 @@ public class IA_DiamondsOpti extends IA {
         // System.out.println(this.getGraph().getVertex(this.getEntite().getCase()));
 
         //System.out.println(retour);
+        System.out.println(localPath);
         return retour;
     }
 

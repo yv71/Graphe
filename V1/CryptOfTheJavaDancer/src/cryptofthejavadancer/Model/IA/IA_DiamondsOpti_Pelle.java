@@ -57,7 +57,7 @@ public class IA_DiamondsOpti_Pelle extends IA {
      * plus proche dest = this.calculDest(); } else { action =
      * noeudToAction(dij.getPath().get(0).getCase()); } return action; }*
      */
-    public Type_Action action() {
+    public Type_Action actionAmed() {
         //System.out.println(localPath);
         Type_Action retour = Type_Action.attendre;
         if (firstTurn) {
@@ -71,12 +71,10 @@ public class IA_DiamondsOpti_Pelle extends IA {
             }
             if (this.nearestDiamond() != null) {
                 localPath = algo.getPath(getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
-                localPath.remove(0);
                 diamonds.remove(nearestDiamond());
             } else {
                 algo.calcul(getMap().getDebut(), getMap().getFina());
                 localPath = this.algo.getPath();
-                localPath.remove(0);
             }
             firstTurn = false;
         }
@@ -90,13 +88,12 @@ public class IA_DiamondsOpti_Pelle extends IA {
                             System.out.println("diamantleplusproche : " + this.nearestDiamond());
                             if (this.nearestDiamond().getType() == Type_Objet.Diamant) {
                                 localPath = algo.getPath(getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
-                                localPath.remove(0);
                                 diamonds.remove(nearestDiamond());
                             }
                             if (this.nearestDiamond().getType() == Type_Objet.Pelle) {
+                                dij.calcul(this.getGraph().getVertex(this.getEntite().getCase()), this.getMap().getFina());
                                 this.getMap().removePelle(this.nearestDiamond());
-                                localPath = algo.getPath(getMap().getGrapheSimple().getVertex(getMap().getPelle().getCase()));
-                                localPath.remove(0);
+                                localPath = dij.getPath(getMap().getGrapheSimple().getVertex(getMap().getPelle().getCase()));
                             }
 
                         } else {
@@ -125,12 +122,11 @@ public class IA_DiamondsOpti_Pelle extends IA {
                         if (this.nearestDiamond() != null) {
                             if (this.nearestDiamond().getType() == Type_Objet.Diamant) {
                                 localPath = dij.getPath(getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
-                                localPath.remove(0);
                                 diamonds.remove(nearestDiamond());
                             }
                             if (this.nearestDiamond().getType() == Type_Objet.Pelle) {
                                 localPath = dij.getPath(getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
-                                localPath.remove(0);
+  
                             }
 
                         } else {
@@ -278,14 +274,17 @@ public class IA_DiamondsOpti_Pelle extends IA {
         return dest;
     }
 
-    public void actionOpti() {
+    public Type_Action action() {
         Type_Action retour = Type_Action.attendre;
         //gestion du premier tour de jeu
         if (firstTurn) {
+            System.out.println("AAAH");
             firstTurn = false;
             this.algo = new Dijkstra(this.getMap().getGrapheSimple());
             this.dij = new Dijkstra(this.getMap().getGraphAvance());
             this.algo.calcul(this.getMap().getDebut(), this.getMap().getFina());
+            this.dij.calcul(this.getMap().getDebut(), this.getMap().getFina());
+           
             for (Objet o : this.entite.getMap().getListeObjet()) {
                 if (o.getType() == Type_Objet.Diamant) {
                     this.diamonds.add(o);
@@ -295,28 +294,77 @@ public class IA_DiamondsOpti_Pelle extends IA {
             if (this.nearestDiamond() != null) {
                 if (nearestDiamond().getType() == Type_Objet.Diamant) {
                     localPath = algo.getPath(getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
-                    localPath.remove(0);
-                } 
-                if (nearestDiamond().getType() == Type_Objet.Pelle){
-                    localPath = algo.getPath(getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
-                    localPath.remove(0);
+                }
+                if (nearestDiamond().getType() == Type_Objet.Pelle) {
+                    localPath = algo.getPath(getMap().getGraphAvance().getVertex(nearestDiamond().getCase()));
                     this.getMap().removePelle(nearestDiamond());
                 }
-                
+
+            } else {
+                algo.calcul(getMap().getDebut(), getMap().getFina());
+                localPath = this.algo.getPath();
             }
-            else {
-                    algo.calcul(getMap().getDebut(), getMap().getFina());
-                    localPath = this.algo.getPath();
-                }
         }
+        System.out.println("PATTH" + localPath);
         // ------------- FIIIIIIIN --------------//
-        
+
         //Action si t'as pas la pelle 
-        if (!this.getMap().getJoueur().getPelle()){
-            //
-            if (this.getMap().getPelle() != null){
-                
-            }
+        if (!this.getMap().getJoueur().getPelle()) {
+            System.out.println("!getPelle");
+            //On calcul le chemin le plus court de la case du joueur jusqu'à la sortie (+ mise à jour du graphe par extension)
+            this.algo.calcul(this.getGraph().getVertex(this.getEntite().getCase()), this.getMap().getFina());
+            //Si la map possède une pelle (une map peut être générée sans pelle)
+                System.out.println("test");
+                //Si le chemin est vide, l'IA est arrivée à destination (sortie ou diamants, normalement)
+                if (this.localPath.isEmpty()) {
+                    System.out.println("empty");
+                    //S'il y a un objet sur la case de l'entité
+                    if (this.entite.getCase().getObjet() != null) {
+                        //On récupère le type de l'objet
+                        Type_Objet test = this.entite.getCase().getObjet().getType();
+                        //On choisit l'action en fonction du type
+                        switch (test) {
+                            case Diamant:
+                                retour = Type_Action.ramasser;
+                                break;
+                            case Pelle:
+                                //Si l'objet est une pelle, alors le nouveau chemin est initialisé
+                                dij.calcul(this.getGraph().getVertex(this.getEntite().getCase()), this.getMap().getFina());
+                                retour = Type_Action.ramasser;
+                                break;
+                            case Sortie:
+                                retour = Type_Action.sortir;
+                                break;
+                            default:
+                                break;
+                       }
+                        //S'il reste un diamant / une pelle à aller chercher
+                       if (this.nearestDiamond() != null){
+                           if (this.nearestDiamond().getType() == Type_Objet.Diamant && this.entite.getCase().getObjet().getType() == Type_Objet.Pelle){
+                               localPath = dij.getPath(this.getMap().getGraphAvance().getVertex(nearestDiamond().getCase()));
+                           }
+                           else if (this.nearestDiamond().getType()== Type_Objet.Diamant || this.nearestDiamond().getType() == Type_Objet.Pelle){
+                               localPath = algo.getPath(this.getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
+                           }
+                       }
+                       //S'il ne reste plus de diamants, on se dirige vers la sortie
+                       else {
+                           localPath = algo.getPath();
+                       }
+                    }
+                }
+                //si le chemin n'est pas vide, on est en plein déplacement
+                else {
+                    System.out.println("salut");
+                    retour = noeudToAction(localPath.get(0).getCase());
+                }
+            
+            
         }
+        //si le joueur a la pelle
+        else {
+            
+        }
+        return retour;
     }
 }

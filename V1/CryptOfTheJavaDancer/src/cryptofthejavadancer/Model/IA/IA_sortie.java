@@ -91,8 +91,6 @@ public class IA_sortie extends IA {
                     }
                     algo.getGraph().getVertices().put(new Case_Sol(CaseSuivante.getLigne(),CaseSuivante.getColonne(),getMap()),algo.getGraph().getVertex(CaseSuivante));
         }
-        System.out.println(retour);
-        System.out.println(this.algo.getPath());
         return retour;
         
     }

@@ -1,7 +1,7 @@
 package cryptofthejavadancer.Model.Entites;
 
+import cryptofthejavadancer.Model.IA.BlueSlime_Automaton.IA_SlimeBleu;
 import cryptofthejavadancer.Model.IA.IA_Immobile;
-import cryptofthejavadancer.Model.IA.IA_SlimeBleu;
 
 /**
  * Slime Bleu
@@ -13,7 +13,7 @@ public class Entite_SlimeBleu extends Entite_Monstre {
 
     public Entite_SlimeBleu() {
         super(2);
-        this.setIA(new IA_Immobile(this));
+        this.setIA(new IA_SlimeBleu(this));
     }
     
 //------------------------------------------------------------------------------

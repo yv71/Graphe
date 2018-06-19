@@ -37,7 +37,7 @@ public class Dijkstra {
 
     public void initialisation() {
         int max = getInfini();
-        this.path = new ArrayList<Vertex>();
+        this.path = new ArrayList<>();
         for (Vertex v : graph.getVertices().values()) {
             distance.put(v, max);
             visited.put(v, false);
@@ -49,13 +49,15 @@ public class Dijkstra {
     public Vertex closestVertex() {
         int min = getInfini() + 1;
         Vertex plusProche = null;
-        for (Vertex v :  visited.keySet()) {
-            if (visited.get(v) == false) {
-                if (distance.get(v) < min) {
-                    plusProche = v;
-                    min = distance.get(v);
+        for (Vertex v : distance.keySet()) {
+                if (visited.get(v) == false) {
+                    if (distance.get(v) < min) {
+                        plusProche = v;
+                        min = distance.get(v);
+                    
                 }
             }
+
         }
         return plusProche;
     }
@@ -141,10 +143,14 @@ public class Dijkstra {
                 v = predecessor.get(v);
             }
         }
+        if (!pathR.isEmpty()){
+           pathR.remove(0);
+        }
+
         return pathR;
     }
-    
-    public Integer getTaillePath(Vertex v){
+
+    public Integer getTaillePath(Vertex v) {
         return distance.get(v);
     }
 
