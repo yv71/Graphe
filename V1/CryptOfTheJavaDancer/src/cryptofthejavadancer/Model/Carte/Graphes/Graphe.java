@@ -72,6 +72,13 @@ public class Graphe {
         }
         System.out.println();
     }
+    
+    public void replaceCase(Case caseInitiale, Case nouvelleCase){
+        Vertex v = this.getVertex(caseInitiale);
+        v.setCase(nouvelleCase);
+        this.Vertices.remove(caseInitiale);
+        this.Vertices.put(nouvelleCase, v);
+    }
    
     
 

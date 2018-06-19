@@ -3,14 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/IA/BlueSlime_Automaton/IA_SlimeBleu.java</file>
-            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/IA/BlueSlime_Automaton/State_Wait2.java</file>
-            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Entites/Entite_SlimeBleu.java</file>
-            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/IA/BlueSlime_Automaton/State_Down.java</file>
-            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/IA/BlueSlime_Automaton/State_Wait1.java</file>
-            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/IA/BlueSlime_Automaton/State_Up.java</file>
-            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Entites/Entite_SlimeVert.java</file>
+            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Graphes/Algorithmes/AStar.java</file>
+            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/IA/IA.java</file>
+            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Map.java</file>
+            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/IA/IA_Diamant_Complexe.java</file>
+            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Graphes/Graphe.java</file>
+            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Controleurs/Timer/TimerPrincipal.java</file>
+            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Entites/Entite_Cadence.java</file>
             <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Graphes/Algorithmes/Dijkstra.java</file>
+            <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/Carte/Graphes/Algorithmes/Dijkstra2.java</file>
             <file>file:/C:/Users/yv066840/Desktop/Graphe/V1/CryptOfTheJavaDancer/src/cryptofthejavadancer/Model/IA/IA_DiamondsOpti.java</file>
         </group>
     </open-files>

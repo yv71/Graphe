@@ -189,6 +189,13 @@ public class Map {
         Case nouvelleCase = Fabrique_Cases.construireCase(typeNouvelleCase, caseInitiale.getLigne(), caseInitiale.getColonne(), this);
         this.setCase(caseInitiale.getLigne(), caseInitiale.getColonne(), nouvelleCase);
         this.listeCase.remove(caseInitiale);
+        
+         if (this.graphe_simple!=null){
+            this.graphe_simple.replaceCase(caseInitiale, nouvelleCase);
+        }
+        if (this.graph_avance!=null){
+            this.graph_avance.replaceCase(caseInitiale, nouvelleCase);
+        }
     }
 
     //Ajoute une entité à la position donnée

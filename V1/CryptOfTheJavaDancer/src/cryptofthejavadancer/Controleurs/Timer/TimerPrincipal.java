@@ -29,7 +29,7 @@ public class TimerPrincipal implements EventHandler {
         //Initialisation
         this.carte = _carte;
         this.scene = _scene;
-        this.duree = 522;
+        this.duree = 100;
         //Creation du timer principal
         this.timer = new Timeline(new KeyFrame(Duration.millis(this.duree),this));
         this.timer.setCycleCount(Timeline.INDEFINITE);
