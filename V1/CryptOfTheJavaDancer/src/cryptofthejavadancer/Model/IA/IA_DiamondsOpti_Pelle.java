@@ -22,14 +22,14 @@ import java.util.ArrayList;
  *
  * @author Beelzed
  */
-public class IA_DiamondsOpti extends IA {
+public class IA_DiamondsOpti_Pelle extends IA {
 
     private ArrayList<Objet> diamonds;
     private Boolean firstTurn;
     private ArrayList<Vertex> localPath;
     private Dijkstra dij;
 
-    public IA_DiamondsOpti(Entite _entite) {
+    public IA_DiamondsOpti_Pelle(Entite _entite) {
         super(_entite);
         algo = null;
         diamonds = new ArrayList<>();
@@ -62,6 +62,7 @@ public class IA_DiamondsOpti extends IA {
         Type_Action retour = Type_Action.attendre;
         if (firstTurn) {
             this.algo = new Dijkstra(this.getMap().getGrapheSimple());
+            this.dij = new Dijkstra(this.getMap().getGraphAvance());
             this.algo.calcul(this.getMap().getDebut(), this.getMap().getFina());
             for (Objet o : this.entite.getMap().getListeObjet()) {
                 if (o.getType() == Type_Objet.Diamant) {
@@ -79,52 +80,118 @@ public class IA_DiamondsOpti extends IA {
             }
             firstTurn = false;
         }
-        if (this.localPath.isEmpty()) {
-            if (this.entite.getCase().getObjet() != null) {
-                this.algo.calcul(this.getGraph().getVertex(this.getEntite().getCase()), this.getMap().getFina());
-                if (this.entite.getCase().getObjet().getType() == Type_Objet.Diamant || this.entite.getCase().getObjet().getType() == Type_Objet.Pelle) {
-                    retour = Type_Action.ramasser;
-                    System.out.println("diamantleplusproche : " + this.nearestDiamond());
-                    if (this.nearestDiamond() != null) {
-                        localPath = algo.getPath(getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
-                        localPath.remove(0);
-                        diamonds.remove(nearestDiamond());
-                    } else {
-                        algo.calcul(this.getMap().getGrapheSimple().getVertex(getMap().getJoueur().getCase()), getMap().getFina());
-                        localPath = this.algo.getPath();
+        if (!this.getMap().getJoueur().getPelle()) {
+            if (this.localPath.isEmpty()) {
+                if (this.entite.getCase().getObjet() != null) {
+                    this.algo.calcul(this.getGraph().getVertex(this.getEntite().getCase()), this.getMap().getFina());
+                    if (this.entite.getCase().getObjet().getType() == Type_Objet.Diamant || this.entite.getCase().getObjet().getType() == Type_Objet.Pelle) {
+                        retour = Type_Action.ramasser;
+                        if (this.nearestDiamond() != null) {
+                            System.out.println("diamantleplusproche : " + this.nearestDiamond());
+                            if (this.nearestDiamond().getType() == Type_Objet.Diamant) {
+                                localPath = algo.getPath(getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
+                                localPath.remove(0);
+                                diamonds.remove(nearestDiamond());
+                            }
+                            if (this.nearestDiamond().getType() == Type_Objet.Pelle) {
+                                this.getMap().removePelle(this.nearestDiamond());
+                                localPath = algo.getPath(getMap().getGrapheSimple().getVertex(getMap().getPelle().getCase()));
+                                localPath.remove(0);
+                            }
+
+                        } else {
+                            algo.calcul(this.getMap().getGrapheSimple().getVertex(getMap().getJoueur().getCase()), getMap().getFina());
+                            localPath = this.algo.getPath();
+                        }
+                    } else if (this.entite.getCase().getObjet().getType() == Type_Objet.Sortie) {
+                        retour = Type_Action.sortir;
                     }
-                } else if (this.entite.getCase().getObjet().getType() == Type_Objet.Sortie) {
-                    retour = Type_Action.sortir;
                 }
+
+            } else {
+                retour = noeudToAction(localPath.get(0).getCase());
             }
+            // System.out.println(this.getGraph().getVertex(this.getEntite().getCase()));
 
+            //System.out.println(retour);
         } else {
-            retour = noeudToAction(localPath.get(0).getCase());
-        }
-        // System.out.println(this.getGraph().getVertex(this.getEntite().getCase()));
+            retour = this.actionAdv();
+            if (this.localPath.isEmpty()) {
+                if (this.entite.getCase().getObjet() != null) {
+                    this.dij.calcul(this.getGraph().getVertex(this.getEntite().getCase()), this.getMap().getFina());
+                    if (this.entite.getCase().getObjet().getType() == Type_Objet.Diamant || this.entite.getCase().getObjet().getType() == Type_Objet.Pelle) {
+                        retour = Type_Action.ramasser;
+                        System.out.println("diamantleplusproche : " + this.nearestDiamond());
+                        if (this.nearestDiamond() != null) {
+                            if (this.nearestDiamond().getType() == Type_Objet.Diamant) {
+                                localPath = dij.getPath(getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
+                                localPath.remove(0);
+                                diamonds.remove(nearestDiamond());
+                            }
+                            if (this.nearestDiamond().getType() == Type_Objet.Pelle) {
+                                localPath = dij.getPath(getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
+                                localPath.remove(0);
+                            }
 
-        //System.out.println(retour);
+                        } else {
+                            dij.calcul(this.getMap().getGrapheSimple().getVertex(getMap().getJoueur().getCase()), getMap().getFina());
+                            localPath = this.algo.getPath();
+                        }
+                    } else if (this.entite.getCase().getObjet().getType() == Type_Objet.Sortie) {
+                        retour = Type_Action.sortir;
+                    }
+                }
+
+            } else {
+                retour = noeudToAction(localPath.get(0).getCase());
+            }
+        }
+
         return retour;
+    }
+
+    public Type_Action actionAdv() {
+        Type_Action test = Type_Action.attendre;
+
+        return test;
     }
 
     public Objet nearestDiamond() {
         Objet diam = null;
-        int minDistance = this.algo.getInfini();
-        for (Objet o : this.diamonds) {
-            int dist = this.algo.getTaillePath(this.getGraph().getVertex(o.getCase()));
-            System.out.println(this.getGraph().getVertex(o.getCase()));
-            System.out.println(dist);
-            System.out.println(minDistance);
-            if (dist < minDistance) {
-                diam = o;
-                minDistance = dist;
+        int minDistance = this.algo.getInfini() + 1;
+        if (!this.getMap().getJoueur().getPelle() && this.getMap().getPelle() != null) {
+            for (Objet o : this.diamonds) {
+                int SimpleDist = this.algo.getTaillePath(this.getGraph().getVertex(o.getCase()));
+                int DistToPelle = this.algo.getTaillePath(this.getGraph().getVertex(this.getMap().getPelle().getCase()));
+                dij.calcul(this.getGraph().getVertex(this.getMap().getPelle().getCase()), this.getGraph().getVertex(o.getCase()));
+                DistToPelle += dij.getPath().size();
+                if (DistToPelle <= SimpleDist) {
+                    if (DistToPelle < minDistance) {
+                        diam = this.getMap().getPelle();
+                        minDistance = DistToPelle;
+
+                    }
+                } else {
+                    if (SimpleDist < minDistance) {
+                        diam = o;
+                        minDistance = SimpleDist;
+                    }
+                }
             }
+        } else {
+            for (Objet o : this.diamonds) {
+                int dist = this.algo.getTaillePath(this.getGraph().getVertex(o.getCase()));
+                if (dist < minDistance) {
+                    diam = o;
+                    minDistance = dist;
+                }
+            }
+
         }
-        System.out.println("Diamant : " + diam + " Distance : " + minDistance);
         return diam;
     }
 
-    public ArrayList<Vertex> getPath(Vertex start, Vertex end) {
+    public ArrayList<Vertex> getPath(Vertex end) {
         return this.algo.getPath(end);
     }
 
@@ -209,5 +276,47 @@ public class IA_DiamondsOpti extends IA {
         }
         dij.calcul(this.getGraph().getVertex(this.getCase()), this.getGraph().getVertex(dest));
         return dest;
+    }
+
+    public void actionOpti() {
+        Type_Action retour = Type_Action.attendre;
+        //gestion du premier tour de jeu
+        if (firstTurn) {
+            firstTurn = false;
+            this.algo = new Dijkstra(this.getMap().getGrapheSimple());
+            this.dij = new Dijkstra(this.getMap().getGraphAvance());
+            this.algo.calcul(this.getMap().getDebut(), this.getMap().getFina());
+            for (Objet o : this.entite.getMap().getListeObjet()) {
+                if (o.getType() == Type_Objet.Diamant) {
+                    this.diamonds.add(o);
+                }
+            }
+
+            if (this.nearestDiamond() != null) {
+                if (nearestDiamond().getType() == Type_Objet.Diamant) {
+                    localPath = algo.getPath(getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
+                    localPath.remove(0);
+                } 
+                if (nearestDiamond().getType() == Type_Objet.Pelle){
+                    localPath = algo.getPath(getMap().getGrapheSimple().getVertex(nearestDiamond().getCase()));
+                    localPath.remove(0);
+                    this.getMap().removePelle(nearestDiamond());
+                }
+                
+            }
+            else {
+                    algo.calcul(getMap().getDebut(), getMap().getFina());
+                    localPath = this.algo.getPath();
+                }
+        }
+        // ------------- FIIIIIIIN --------------//
+        
+        //Action si t'as pas la pelle 
+        if (!this.getMap().getJoueur().getPelle()){
+            //
+            if (this.getMap().getPelle() != null){
+                
+            }
+        }
     }
 }

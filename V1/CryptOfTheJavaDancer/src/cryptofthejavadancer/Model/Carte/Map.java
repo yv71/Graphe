@@ -244,6 +244,9 @@ public class Map {
         return pelle;
     }
     
+    public void removePelle(Objet o){
+        listeObjet.remove(o);
+    }
     //Renvoie la position du point de sortie
     public Coordonnees getSortie() {
         return this.fin;

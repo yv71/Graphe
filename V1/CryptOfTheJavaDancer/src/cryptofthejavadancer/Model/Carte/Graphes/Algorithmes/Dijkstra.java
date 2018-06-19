@@ -49,7 +49,7 @@ public class Dijkstra {
     public Vertex closestVertex() {
         int min = getInfini() + 1;
         Vertex plusProche = null;
-        for (Vertex v : distance.keySet()) {
+        for (Vertex v :  visited.keySet()) {
             if (visited.get(v) == false) {
                 if (distance.get(v) < min) {
                     plusProche = v;
@@ -132,12 +132,11 @@ public class Dijkstra {
         return graph;
     }
 
-    public ArrayList<Vertex> getPath(Vertex start, Vertex end) {
+    public ArrayList<Vertex> getPath(Vertex end) {
         ArrayList<Vertex> pathR = new ArrayList<>();
         Vertex v = end;
-        Vertex t = predecessor.get(v);
         if (predecessor.get(v) != null) {
-            while (v != start && v != null) {
+            while (v != null) {
                 pathR.add(0, v);
                 v = predecessor.get(v);
             }
