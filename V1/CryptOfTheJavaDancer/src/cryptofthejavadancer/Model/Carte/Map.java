@@ -68,7 +68,6 @@ public class Map {
         //this.getInfos();
         this.genererGrapheSimple();
         this.genererGrapheAvance();
-        cF = new Case_Sol(fin.getLigne(), fin.getColonne(), this);
         debut = graphe_simple.getVertex(this.getCase(depart.getLigne(), depart.getColonne()));
         fina = graphe_simple.getVertex(this.getCase(fin.getLigne(), fin.getColonne()));
         // this.algo.calcul(debut,fina);
@@ -170,7 +169,7 @@ public class Map {
     }
 
     public Case getCaseFin() {
-        return this.cF;
+        return this.getCase(fin.getLigne(),fin.getColonne());
     }
 
     //Renvoie la case présente à ses coordonnées

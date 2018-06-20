@@ -5,6 +5,10 @@
  */
 package cryptofthejavadancer.Model.IA.BlueSlime_Automaton;
 
+import cryptofthejavadancer.Model.Carte.Cases.Case;
+import cryptofthejavadancer.Model.Carte.Cases.Type_Case;
+import cryptofthejavadancer.Model.Entites.Type_Entite;
+import cryptofthejavadancer.Model.IA.IA;
 import cryptofthejavadancer.Model.IA.State;
 import cryptofthejavadancer.Model.IA.Type_Action;
 
@@ -12,16 +16,41 @@ import cryptofthejavadancer.Model.IA.Type_Action;
  *
  * @author yv066840
  */
-public class State_Up extends State{
+public class State_Up extends State {
+
+    public State_Up(IA ia) {
+        super(ia);
+    }
 
     @Override
     public Type_Action agir() {
-       return Type_Action.deplacement_haut;
+        Type_Action retour = Type_Action.deplacement_haut;
+        Case caseSuivante = this.getMap().getCase(this.getCase().getLigne() - 1, this.getCase().getColonne());
+        if (caseSuivante.getType() == Type_Case.Sol) {
+            if (caseSuivante.getEntite() != null) {
+                if (caseSuivante.getEntite().getType() == Type_Entite.Cadence) {
+                    retour = Type_Action.interagir_haut;
+                } else {
+                    retour = Type_Action.attendre;
+                }
+            }
+        } else {
+            retour = Type_Action.attendre;
+        }
+
+        return retour;
     }
 
     @Override
     public State transition() {
-        return new State_Wait1();
+        State retour = null;
+        if (this.agir()==Type_Action.deplacement_haut){
+            retour = new State_Wait1(this.getIA());
+        }
+        else {
+            retour = this;
+        }
+        return retour;
     }
-    
+
 }

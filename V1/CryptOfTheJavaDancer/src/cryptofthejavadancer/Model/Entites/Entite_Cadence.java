@@ -11,7 +11,6 @@ import cryptofthejavadancer.Model.Carte.Graphes.Graphe;
 import cryptofthejavadancer.Model.IA.IA_Diamant_Complexe;
 import cryptofthejavadancer.Model.IA.IA_Diamonds;
 import cryptofthejavadancer.Model.IA.IA_DiamondsOpti;
-import cryptofthejavadancer.Model.IA.IA_DiamondsOpti_Pelle;
 import cryptofthejavadancer.Model.IA.IA_Immobile;
 import cryptofthejavadancer.Model.IA.IA_droite;
 import cryptofthejavadancer.Model.IA.IA_sortie;

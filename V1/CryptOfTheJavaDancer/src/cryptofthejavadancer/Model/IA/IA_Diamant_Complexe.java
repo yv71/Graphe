@@ -152,7 +152,7 @@ public class IA_Diamant_Complexe extends IA {
                     astarPelle.calcul(grapheSimple.getVertex(this.getCase()), grapheSimple.getVertex(pelle.getCase()));
                     //System.out.println(astar.getPath());
                     //System.out.println(astar.getDistance());
-                    int distCadPelle = astarPelle.getTaillePath(grapheSimple.getVertex(pelle.getCase()));       //J'utilise Astar pour raccourcir le trajet
+                    int distCadPelle = astarPelle.taillePath(grapheSimple.getVertex(pelle.getCase()));       //J'utilise Astar pour raccourcir le trajet
                     //System.out.println("distCadPelle "+distCadPelle);
                     dijkstraComplexe.calcul(grapheComplexe.getVertex(pelle.getCase()), grapheComplexe.getVertex(o.getCase()));
                     int distPelleDiam = dijkstraComplexe.taillePath(grapheComplexe.getVertex(o.getCase()));

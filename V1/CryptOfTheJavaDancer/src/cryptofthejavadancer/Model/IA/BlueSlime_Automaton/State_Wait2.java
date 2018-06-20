@@ -5,6 +5,7 @@
  */
 package cryptofthejavadancer.Model.IA.BlueSlime_Automaton;
 
+import cryptofthejavadancer.Model.IA.IA;
 import cryptofthejavadancer.Model.IA.State;
 import cryptofthejavadancer.Model.IA.Type_Action;
 
@@ -14,6 +15,10 @@ import cryptofthejavadancer.Model.IA.Type_Action;
  */
 public class State_Wait2 extends State{
 
+    public State_Wait2(IA ia) {
+        super(ia);
+    }
+
     @Override
     public Type_Action agir() {
         return Type_Action.attendre;
@@ -21,7 +26,7 @@ public class State_Wait2 extends State{
 
     @Override
     public State transition() {
-        return new State_Up();
+        return new State_Up(this.getIA());
     }
     
 }
